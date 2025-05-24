@@ -55,6 +55,7 @@ class PendaftaranController extends Controller
             'images' => !empty($fotoPaths) ? json_encode($fotoPaths) : null,
         ]);
 
+
         $recipient = auth()->user() ?? User::where('email', 'admin@gmail.com')->first();
         if ($recipient) {
             DatabaseNotification::create([

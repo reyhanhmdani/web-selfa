@@ -27,6 +27,8 @@ class StudentResource extends Resource
     protected static ?string $navigationGroup = 'Database Member';
     protected static ?string $navigationLabel = 'Para Santri';
 
+    protected static ?string $pluralLabel = 'Santri';
+
     public static function form(Form $form): Form
     {
         return $form
