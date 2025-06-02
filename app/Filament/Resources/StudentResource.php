@@ -13,9 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Widgets\CalonSantriNotification;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Tables\Actions\Action;
 
 class StudentResource extends Resource
 {
@@ -24,7 +22,7 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     // ⬇ Tambahkan navigation group
-    protected static ?string $navigationGroup = 'Database Member';
+    protected static ?string $navigationGroup = 'Database SELFA';
     protected static ?string $navigationLabel = 'Para Santri';
 
     protected static ?string $pluralLabel = 'Santri';
@@ -109,17 +107,6 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-
-                // TextColumn::make('no')->state(
-                //     static function (HasTable $livewire, stdClass $rowLoop): string {
-                //         return (string) (
-                //             $rowLoop->iteration +
-                //             ($livewire->getTableRecordsPerPage() * (
-                //                 $livewire->getTablePage() - 1
-                //             ))
-                //         );
-                //     }
-                // ),
                 TextColumn::make('name')
                     ->label('Nama Santri')
                     ->searchable()
@@ -211,7 +198,12 @@ class StudentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\DeleteAction::make(),
+                Action::make('print')
+                    ->label('PDF')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn($record) => route('santri.export.pdf', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -236,14 +228,4 @@ class StudentResource extends Resource
         ];
     }
 
-    // public static function getLabel(): ?string
-    // {
-    //     $locale = app()->getLocale();
-
-    //     if ($locale == 'id') {
-    //         return 'Santri';
-    //     } else {
-    //         return 'Students';
-    //     }
-    // }
 }

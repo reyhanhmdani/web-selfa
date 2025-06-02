@@ -12,18 +12,36 @@
         }
     });
 
-    // Back to top button
+    // DONASI
+$(document).ready(function () {
+    // Show/hide donation message based on scroll
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
-            $(".back-to-top").fadeIn("slow");
+            $("#donationMessage").fadeIn("slow");
         } else {
-            $(".back-to-top").fadeOut("slow");
+            $("#donationMessage").fadeOut("slow");
+            $("#donationMenu").fadeOut("slow"); // Hide menu when message is hidden
         }
     });
-    $(".back-to-top").click(function () {
-        $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
-        return false;
+
+    // Toggle donation menu on message click
+    $("#donationMessage").click(function (e) {
+        e.preventDefault();
+        $("#donationMenu").fadeToggle("fast");
     });
+
+    // Close menu when clicking outside
+    $(document).click(function (e) {
+        if (!$(e.target).closest("#donationMessage, #donationMenu").length) {
+            $("#donationMenu").fadeOut("fast");
+        }
+    });
+
+    // Close menu when a donation item is clicked
+    $(".donation-item").click(function () {
+        $("#donationMenu").fadeOut("fast");
+    });
+});
 
     // Facts counter
     $('[data-toggle="counter-up"]').counterUp({

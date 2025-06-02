@@ -22,7 +22,7 @@ class TeamResource extends Resource
 {
     protected static ?string $model = Team::class;
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Database SELFA';
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
 

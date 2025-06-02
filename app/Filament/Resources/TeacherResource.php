@@ -22,7 +22,7 @@ class TeacherResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Database Member';
+    protected static ?string $navigationGroup = 'Database SELFA';
 
     protected static ?string $navigationLabel = 'Ustad dan Ustadzah';
 

@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Team;
 use App\Models\About;
 use App\Models\Lembaga;
+use App\Models\Navbar;
 use App\Models\Program;
 use App\Models\Student;
 use App\Models\Pendidikan;
@@ -16,9 +17,8 @@ class LandingController extends Controller
 {
     public function index()
     {
-
-
         // Section
+        $navbar = Navbar::first();
         $header = SectionHeader::where('section_key', 'program')->first();
         $about = About::first();
         $pendidikans = Pendidikan::take(3)->get();
@@ -31,6 +31,6 @@ class LandingController extends Controller
         $totalLembaga = Lembaga::count();
         $teams = Team::all();
 
-        return view('index', compact('about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams'));
+        return view('index', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams'));
     }
 }

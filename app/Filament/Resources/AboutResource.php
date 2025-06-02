@@ -113,6 +113,11 @@ class AboutResource extends Resource
             ]);
     }
 
+    public static function canCreate(): bool
+    {
+        return About::count() === 0;
+    }
+
     public static function getPages(): array
     {
         return [

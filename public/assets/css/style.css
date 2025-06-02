@@ -636,3 +636,81 @@ h6,
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+
+/* DONASI */
+/* .floating-donation {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1000;
+    display: none;
+} */
+
+.donation-message {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: bold;
+    display: none;
+    animation: pulse 2s infinite;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.donation-message:hover {
+    background: #0056b3;
+}
+
+.donation-menu {
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.donation-item {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.donation-item:last-child {
+    border-bottom: none;
+}
+
+.donation-item:hover {
+    background: #f8f9fa;
+    color: #007bff;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+@media (max-width: 768px) {
+    .donation-message {
+        bottom: 40px;
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+    .donation-menu {
+        bottom: 70px;
+    }
+}
