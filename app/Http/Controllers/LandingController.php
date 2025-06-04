@@ -31,6 +31,6 @@ class LandingController extends Controller
         $totalLembaga = Lembaga::count();
         $teams = Team::all();
 
-        return view('index', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams'));
+        return view('pages.home', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams'));
     }
 }

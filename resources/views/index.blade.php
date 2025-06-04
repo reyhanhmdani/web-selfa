@@ -1,1008 +1,1067 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
     <head>
-        <meta charset="utf-8" />
-        <title>Pondok Sayf El Falah</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta content="" name="keywords" />
-        <meta content="" name="description" />
-        <!-- Favicon -->
-        <link href="{{ asset("assets/img/favicon.ico") }}" rel="icon" />
-
-        {{-- Swiper --}}
-        <link
-            rel="stylesheet"
-            href="https://unpkg.com/swiper/swiper-bundle.min.css"
-        />
-
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Teko:wght@400;500;600&display=swap"
-            rel="stylesheet"
-        />
-
-        <!-- Icon Font Stylesheet -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-            rel="stylesheet"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-            rel="stylesheet"
-        />
-        <!-- Bootstrap Icons CSS -->
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        />
-
-        <!-- Libraries Stylesheet -->
-        <link
-            href="{{ asset("assets/lib/animate/animate.min.css") }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset("assets/lib/owlcarousel/assets/owl.carousel.min.css") }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset("assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css") }}"
-            rel="stylesheet"
-        />
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link
-            href="{{ asset("assets/css/bootstrap.min.css") }}"
-            rel="stylesheet"
-        />
-
-        <!-- Template Stylesheet -->
-        <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ponpes Selfa - Pendidikan Islam Berkualitas</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    <body class="font-sans bg-gray-50">
+        <!-- Floating Navigation -->
+        <nav class="floating-nav floating-nav-mobile md:floating-nav">
+            <div class="hidden md:flex items-center">
+                @if ($navbar && $navbar->logo)
+                    <img
+                        src="{{ asset('storage/' . $navbar->logo) }}"
+                        alt="Logo"
+                        class="h-10 mr-3"
+                    />
+                @endif
 
-    <body>
-        <!-- Navbar Start -->
-        <nav
-            class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-lg-5 wow fadeIn"
-            data-wow-delay="0.1s"
-        >
-            <a href="#" class="navbar-brand ms-3 ms-lg-0">
-                <h1 class="text-primary m-0 Judul">
-                    @if ($navbar && $navbar->logo)
-                        <img
-                            class="me-3"
-                            src="{{ asset("storage/" . $navbar->logo) }}"
-                            alt="Icon"
-                        />
-                    @else
-                        <img
-                            class="me-3"
-                            src="{{ asset("assets/img/IconFalahNoBg.png") }}"
-                            alt="Icon"
-                        />
-                    @endif
-                    {{ $navbar->title ?? "Sayf EL Falah" }}
-                </h1>
-            </a>
-            <button
-                type="button"
-                class="navbar-toggler me-4"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    @if ($navbar && is_array($navbar->navigation))
-                        @foreach ($navbar->navigation as $nav)
-                            @if ($nav["type"] === "dropdown")
-                                <div class="nav-item dropdown">
-                                    <a
-                                        href="#"
-                                        class="nav-link dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                    >
-                                        {{ $nav["label"] }}
-                                    </a>
-                                    <div class="dropdown-menu border-0 m-0">
-                                        @if (is_array($nav["children"]))
-                                            @foreach ($nav["children"] as $child)
-                                                <a
-                                                    href="{{ $child["url"] }}"
-                                                    class="dropdown-item {{ $child["type"] === "anchor" ? "anchor-link" : "" }}"
-                                                    {{ $child["type"] === "external" ? 'target="_blank"' : "" }}
-                                                >
-                                                    {{ $child["label"] }}
-                                                </a>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            @elseif ($nav["button"] ?? false)
-                                <!-- Tombol Daftar ditangani di luar navbar-nav -->
-                            @else
-                                <a
-                                    href="{{ $nav["url"] }}"
-                                    class="nav-item nav-link {{ $nav["type"] === "anchor" ? "anchor-link" : "" }} {{ request()->is(trim($nav["url"], "/")) ? "active" : "" }}"
-                                    {{ $nav["type"] === "external" ? 'target="_blank"' : "" }}
-                                >
-                                    {{ $nav["label"] }}
-                                </a>
-                            @endif
-                        @endforeach
-                    @endif
-                </div>
+                <a href="#" class="text-2xl font-bold text-green-600">
+                    {{ $navbar->title ?? 'Ponpes Selfa' }}
+                </a>
+            </div>
+
+            <div class="flex items-center space-x-1 md:space-x-4">
                 @if ($navbar && is_array($navbar->navigation))
                     @foreach ($navbar->navigation as $nav)
-                        @if ($nav["button"] ?? false)
+                        @if (($nav['type'] ?? '') === 'dropdown' && isset($nav['children']))
+                            <div class="dropdown relative">
+                                <button
+                                    class="p-2 md:px-4 rounded-full hover:bg-green-50 text-gray-700 hover:text-green-600 transition flex items-center"
+                                >
+                                    @if (! empty($nav['icon']))
+                                        <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
+                                    @endif
+
+                                    <span class="hidden md:inline ml-2">
+                                        {{ $nav['label'] }}
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                                <div
+                                    class="dropdown-menu hidden absolute transition-all duration-300"
+                                >
+                                    @foreach ($nav['children'] as $child)
+                                        <a
+                                            href="{{ $child['url'] }}"
+                                            class="block px-4 py-2 hover:bg-green-50 text-gray-700 transition {{ ($child['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }}"
+                                            {{ ($child['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
+                                        >
+                                            @if (! empty($child['icon']))
+                                                <i
+                                                    class="fa-solid fa-{{ $child['icon'] }} mr-2"
+                                                ></i>
+                                            @endif
+
+                                            {{ $child['label'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @elseif ($nav['button'] ?? false)
+                            {{-- Tombol Daftar ditampilkan di luar navbar-nav --}}
+                        @else
                             <a
-                                href="{{ $nav["url"] }}"
-                                class="btn btn-primary rounded-pill py-2 px-4 d-none d-lg-block {{ $nav["type"] === "anchor" ? "anchor-link" : "" }}"
-                                {{ $nav["type"] === "external" ? 'target="_blank"' : "" }}
+                                href="{{ $nav['url'] }}"
+                                class="p-2 md:px-4 rounded-full hover:bg-green-50 text-gray-700 hover:text-green-600 transition {{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} {{ request()->is(trim($nav['url'], '/')) ? 'text-green-600 font-semibold' : '' }}"
+                                {{ ($nav['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
                             >
-                                {{ $nav["label"] }}
+                                @if (! empty($nav['icon']))
+                                    <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
+                                @endif
+
+                                <span class="hidden md:inline ml-2">
+                                    {{ $nav['label'] }}
+                                </span>
                             </a>
                         @endif
                     @endforeach
-                @else
                 @endif
             </div>
-        </nav>
-        <!-- Navbar End -->
 
-        <!-- Carousel Start -->
-        <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="owl-carousel header-carousel position-relative">
-                <div
-                    class="owl-carousel-item position-relative"
-                    data-dot="<img src={{ asset("assets/img/masjidselfa1.jpg") }}>"
-                >
-                    <img
-                        class="img-fluid"
-                        src="{{ asset("assets/img/masjidselfa1.jpg") }}"
-                        alt=""
-                    />
-                    <div class="owl-carousel-inner">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-10 col-lg-8">
-                                    <h1
-                                        class="display-1 text-white animated slideInDown"
-                                    >
-                                        Selamat Datang di Ponpes Sayf El Falah
-                                    </h1>
-                                    <p
-                                        class="fs-5 fw-medium text-white mb-2 pb-3 pt-5"
-                                    >
-                                        Pondok Pesantren Sayf El Falah adalah
-                                        lembaga pendidikan Islam yang
-                                        berkomitmen mencetak generasi beriman,
-                                        bertakwa, dan berakhlak mulia.
-                                    </p>
-                                    <!-- <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Selengkapnya</a> -->
-                                </div>
-                            </div>
-                        </div>
+            @if ($navbar && is_array($navbar->navigation))
+                @foreach ($navbar->navigation as $nav)
+                    @if ($nav['button'] ?? false)
+                        <a
+                            href="{{ $nav['url'] }}"
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition shadow-md {{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }}"
+                            {{ ($nav['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
+                        >
+                            {{ $nav['label'] }}
+                        </a>
+                    @endif
+                @endforeach
+            @endif
+        </nav>
+
+        <!-- Floating Register Button -->
+        <a
+            href="#daftar"
+            class="floating-btn bg-green-600 hover:bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+        >
+            <i class="fas fa-user-plus"></i>
+        </a>
+
+        <!-- Header Section -->
+        <!-- Section Home dengan Background Slider -->
+        <section id="home" class="relative h-screen text-white overflow-hidden">
+            <!-- Swiper Background -->
+            <div class="absolute inset-0 z-0">
+                <div class="swiper-container bg-swiper h-full">
+                    <div class="swiper-wrapper">
+                        <div
+                            class="swiper-slide bg-cover bg-center h-full"
+                            style="
+                                background-image: url('{{ asset('assets/img/masjidselfa1.jpg') }}');
+                            "
+                        ></div>
+                        <div
+                            class="swiper-slide bg-cover bg-center h-full"
+                            style="
+                                background-image: url('{{ asset('assets/img/masjidselfa2.jpg') }}');
+                            "
+                        ></div>
                     </div>
                 </div>
-                <div
-                    class="owl-carousel-item position-relative"
-                    data-dot="<img src={{ asset("assets/img/sayfelfalah-pb-1.jpg") }}>"
-                >
-                    <img
-                        class="img-fluid"
-                        src="{{ asset("assets/img/sayfelfalah-pb-1.jpg") }}"
-                        alt=""
-                    />
-                    <div class="owl-carousel-inner">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-10 col-lg-8">
-                                    <h1
-                                        class="display-1 text-white animated slideInDown"
-                                    >
-                                        Selamat Datang di Ponpes Sayf El Falah
-                                    </h1>
-                                    <p
-                                        class="fs-5 fw-medium text-white mb-2 pb-3 pt-5"
-                                    >
-                                        Pondok Pesantren Sayf El Falah adalah
-                                        lembaga pendidikan Islam yang
-                                        berkomitmen mencetak generasi beriman,
-                                        bertakwa, dan berakhlak mulia.
-                                    </p>
-                                    <!-- <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Selengkapnya</a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="owl-carousel-item position-relative"
-                    data-dot="<img src={{ asset("assets/img/masjidselfa2.jpg") }}>"
-                >
-                    <img
-                        class="img-fluid"
-                        src="{{ asset("assets/img/masjidselfa2.jpg") }}"
-                        alt=""
-                    />
-                    <div class="owl-carousel-inner">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-10 col-lg-8">
-                                    <h1
-                                        class="display-1 text-white animated slideInDown"
-                                    >
-                                        Selamat Datang di Ponpes Sayf El Falah
-                                    </h1>
-                                    <p
-                                        class="fs-5 fw-medium text-white mb-2 pb-3 pt-5"
-                                    >
-                                        Pondok Pesantren Sayf El Falah adalah
-                                        lembaga pendidikan Islam yang
-                                        berkomitmen mencetak generasi beriman,
-                                        bertakwa, dan berakhlak mulia.
-                                    </p>
-                                    <!-- <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Selengkapnya</a> -->
-                                </div>
-                            </div>
+
+                <!-- Overlay gelap -->
+                <div class="absolute inset-0 bg-black/60 z-10"></div>
+            </div>
+
+            <!-- Konten di atas slider -->
+            <div class="relative z-20 h-full flex items-center">
+                <div class="container mx-auto px-4 text-center md:text-left">
+                    <div class="md:w-1/2">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                            Selamat Datang di Ponpes Selfa
+                        </h1>
+                        <p class="text-xl mb-6">
+                            Membentuk generasi Qur'ani yang berakhlak mulia, berwawasan luas, dan
+                            mandiri.
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                            <a
+                                href="#about"
+                                class="bg-white text-green-700 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition shadow-md"
+                            >
+                                Jelajahi Lebih
+                            </a>
+                            <a
+                                href="#daftar"
+                                class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-green-600 transition"
+                            >
+                                Daftar Sekarang
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Carousel End -->
+        </section>
 
-        <!-- About Start -->
-        <div id="About" class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="about-img">
-                            @if ($about->image_1)
-                                <img
-                                    class="img-fluid"
-                                    src="{{ asset("storage/" . $about->image_1) }}"
-                                    alt="Gambar 1"
-                                />
-                            @endif
-
-                            @if ($about->image_2)
-                                <img
-                                    class="img-fluid"
-                                    src="{{ asset("storage/" . $about->image_2) }}"
-                                    alt=""
-                                />
-                            @endif
-                        </div>
+        <!-- About Section -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <img
+                            src="{{ asset('storage/' . $about->image_1) }}"
+                            alt="Tentang Ponpes Selfa"
+                            class="rounded-lg mx-auto"
+                            style="width: 360px"
+                        />
                     </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h4 class="section-title">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
                             {{ $about->title_section }}
-                        </h4>
-                        <h1 class="display-5 mb-4 title-Section">
+                        </h2>
+                        <h3 class="text-2xl font-semibold mb-4 sub-title-section">
                             {{ $about->sub_title }}
-                        </h1>
-                        <p>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
                             {!! nl2br(e($about->description)) !!}
                         </p>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <div class="text-green-600 text-2xl mb-2">
+                                    <i class="fas fa-mosque"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">Pendidikan Agama</h4>
+                                <p class="text-gray-600 text-sm">
+                                    Kurikulum agama yang komprehensif
+                                </p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <div class="text-green-600 text-2xl mb-2">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">Pendidikan Umum</h4>
+                                <p class="text-gray-600 text-sm">
+                                    Kurikulum nasional yang berkualitas
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- About End -->
+        </section>
 
-        <!-- Pendidikan Start -->
-        <div class="container-xxl py-5">
-            <div class="container pt-5">
-                <div class="row g-4">
-                    @foreach ($pendidikans as $pendidikan)
-                        <div
-                            class="col-lg-4 col-md-6 wow fadeInUp"
-                            data-wow-delay="0.1s"
-                        >
+        <!-- Program Section -->
+        <section id="program" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    @php
+                        $section = sectionHeader('program');
+                    @endphp
+
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                        {{ $section->title }}
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-5">
+                        {{ $section->subtitle }}
+                    </p>
+                    <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ($programs as $program)
+                        <div class="relative group rounded-xl overflow-hidden shadow-lg">
+                            <img
+                                src="{{ asset('storage/' . $program->image) }}"
+                                alt="{{ $program->title }}"
+                                class="absolute inset-0 w-full h-full object-cover z-0 transition duration-500 group-hover:scale-105"
+                            />
                             <div
-                                class="fact-item text-center bg-light h-100 p-5 pt-0"
+                                class="relative z-10 h-full bg-white bg-opacity-90 group-hover:bg-black/70 transition duration-500 flex flex-col justify-center items-center text-center p-6"
                             >
-                                <div class="fact-icon">
-                                    @if ($pendidikan->icon)
-                                        <img
-                                            src="{{ asset("storage/" . $pendidikan->icon) }}"
-                                            class="img-fluid"
-                                            alt=""
-                                            style="
-                                                height: 80px;
-                                                object-fit: contain;
-                                            "
-                                        />
-                                    @endif
-
-                                    <img src="" alt="" />
-                                </div>
-                                <h3 class="mb-3 title-Section">
-                                    {{ $pendidikan->title }}
+                                <img
+                                    src="{{ asset('storage/' . $program->icon) }}"
+                                    alt=""
+                                    class="h-16 mb-4"
+                                />
+                                <h3
+                                    class="text-xl font-semibold text-gray-800 group-hover:text-white mb-3"
+                                >
+                                    {{ $program->title }}
                                 </h3>
-                                <p class="mb-0">
-                                    {!! nl2br(e($pendidikan->description)) !!}
+                                <p class="text-gray-600 group-hover:text-gray-200 text-sm">
+                                    {{ $program->description }}
                                 </p>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-        </div>
-        <!-- Pendidikan End -->
+        </section>
 
-        <!-- Statistics Section Start -->
-        <div class="container-xxl py-5 mt-5 mb-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
+        <!-- Gallery Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                        Galeri Kegiatan
+                    </h2>
+                    <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1588072432836-1009b082c898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1588072432836-1009b082c898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
+                        <img
+                            src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Kegiatan Ponpes"
+                            class="w-full h-48 object-cover hover:scale-105 transition duration-500"
+                        />
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a
+                        href="#"
+                        class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md"
+                    >
+                        Lihat Lebih Banyak
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    @php
+                        $section = sectionHeader('team');
+                    @endphp
+
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                        {{ $section->title }}
+                    </h2>
+                    <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+                </div>
+
+                <div
+                    class="grid grid-cols-2 gap-8 justify-center md:flex md:flex-wrap md:justify-center"
+                >
+                    @foreach ($teams as $team)
                         <div
-                            class="border border-3 border-primary p-4 bg-light shadow-lg rounded-4"
+                            class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition w-full max-w-xs flex flex-col justify-between min-h-[300px]"
                         >
-                            <div class="row g-4 justify-content-center">
-                                <div class="col-md-3 col-6 text-center">
-                                    <h1
-                                        class="display-4"
-                                        data-toggle="counter-up"
-                                    >
-                                        2023
-                                    </h1>
-                                    <h5 class="mt-2">Tahun Berdiri</h5>
+                            <div>
+                                <div
+                                    class="w-32 h-32 mx-auto mb-4 overflow-hidden border-4 border-green-100"
+                                >
+                                    <img
+                                        src="{{ asset('storage/' . $team->photo) }}"
+                                        alt="{{ $team->name }}"
+                                        class="w-full h-full object-cover"
+                                    />
                                 </div>
-                                <div class="col-md-3 col-6 text-center">
-                                    <h1
-                                        class="display-4"
-                                        data-toggle="counter-up"
+                                <h3
+                                    class="text-base sm:text-lg md:text-xl font-semibold mb-1 truncate text-green-500"
+                                >
+                                    {{ $team->name }}
+                                </h3>
+                                <p class="text-sm sm:text-base text-blue-600 mb-3 line-clamp-2">
+                                    {{ $team->position }}
+                                </p>
+                            </div>
+                            <div
+                                class="flex justify-center space-x-3 mt-4 text-lg sm:text-xl md:text-2xl"
+                            >
+                                @if ($team->facebook)
+                                    <a
+                                        href="{{ $team->facebook }}"
+                                        target="_blank"
+                                        class="text-gray-400 hover:text-green-600 transition"
                                     >
-                                        {{ $totalSantri + 11 }}
-                                    </h1>
-                                    <h5 class="mt-2">Santri</h5>
-                                </div>
-                                <div class="col-md-3 col-6 text-center">
-                                    <h1
-                                        class="display-4"
-                                        data-toggle="counter-up"
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                @endif
+
+                                @if ($team->instagram)
+                                    <a
+                                        href="{{ $team->instagram }}"
+                                        target="_blank"
+                                        class="text-gray-400 hover:text-green-600 transition"
                                     >
-                                        10
-                                    </h1>
-                                    <h5 class="mt-2">Pengurus</h5>
-                                </div>
-                                <div class="col-md-3 col-6 text-center">
-                                    <h1
-                                        class="display-4"
-                                        data-toggle="counter-up"
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                @endif
+
+                                @if ($team->twitter)
+                                    <a
+                                        href="{{ $team->twitter }}"
+                                        target="_blank"
+                                        class="text-gray-400 hover:text-green-600 transition"
                                     >
-                                        {{ $totalLembaga }}
-                                    </h1>
-                                    <h5 class="mt-2">Lembaga</h5>
-                                </div>
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-green-600 text-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div
+                            class="text-4xl font-bold mb-2"
+                            data-toggle="counter-up"
+                            data-count="2023"
+                        >
+                            0
+                        </div>
+                        <div class="text-lg">Tahun Berdiri</div>
+                    </div>
+                    <div>
+                        <div
+                            class="text-4xl font-bold mb-2"
+                            data-toggle="counter-up"
+                            data-count="{{ $totalSantri + 11 }}"
+                        >
+                            0
+                        </div>
+                        <div class="text-lg">Santri</div>
+                    </div>
+                    <div>
+                        <div
+                            class="text-4xl font-bold mb-2"
+                            data-toggle="counter-up"
+                            data-count="8"
+                        >
+                            0
+                        </div>
+                        <div class="text-lg">Pengajar</div>
+                    </div>
+                    <div>
+                        <div
+                            class="text-4xl font-bold mb-2"
+                            data-toggle="counter-up"
+                            data-count="{{ $totalLembaga }}"
+                        >
+                            0
+                        </div>
+                        <div class="text-lg">Lembaga Yayasan</div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Statistics Section End -->
+        </section>
 
-        <!-- Team Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div
-                    class="text-center mx-auto mb-5 wow fadeInUp"
-                    data-wow-delay="0.1s"
-                    style="max-width: 600px"
-                >
+        <!-- Partner Institutions Section -->
+        <section id="lembaga" class="py-20 bg-gray-100 overflow-x-hidden">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                        Partner Pondok
+                    </h2>
+                    <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+                </div>
+
+                <div class="relative px-4 sm:px-10 md:px-20">
+                    <div class="swiper lembaga-slider">
+                        <div class="swiper-wrapper">
+                            @foreach ($lembagas as $lembaga)
+                                <div
+                                    class="swiper-slide py-12 flex flex-col items-center justify-center text-center transition-all duration-300"
+                                >
+                                    <img
+                                        src="{{ $lembaga->logo ? asset('storage/' . $lembaga->logo) : asset('images/default-logo.png') }}"
+                                        alt="{{ $lembaga->nama_lembaga }}"
+                                        class="lembaga-logo object-contain transition-all duration-300"
+                                    />
+                                    <h5
+                                        class="text-sm font-semibold text-gray-800 uppercase tracking-wide mt-2"
+                                    >
+                                        {{ $lembaga->nama_lembaga }}
+                                    </h5>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="swiper-pagination modern-pagination mt-10"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10">
                     @php
-                        $section = sectionHeader("team");
+                        $section = sectionHeader('blog');
                     @endphp
 
-                    <h4 class="section-title">{{ $section->title }}</h4>
-                    <h1 class="displa y-5 mb-4 title-Section">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">
+                        {{ $section->title }}
+                    </h2>
+                    <h3 class="text-base sm:text-xl font-semibold mb-4 text-gray-600">
                         {{ $section->subtitle }}
-                    </h1>
+                    </h3>
+                    <div class="w-20 h-1 bg-green-500 mx-auto"></div>
                 </div>
-                <div class="row g-0 team-items">
-                    @foreach ($teams as $index => $team)
-                        <div class="col-lg-3 col-md-6">
+
+                @if ($blogs->count() > 0)
+                    @php
+                        $count = count($blogs);
+                        $gridCols = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+
+                        if ($count === 1) {
+                            $gridCols = 'grid-cols-1 sm:grid-cols-1 lg:grid-cols-1';
+                        } elseif ($count === 2) {
+                            $gridCols = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-2';
+                        } elseif ($count === 3) {
+                            $gridCols = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+                        }
+                    @endphp
+
+                    <div class="grid {{ $gridCols }} gap-6 justify-center">
+                        @foreach ($blogs as $blog)
                             <div
-                                class="team-item position-relative wow fadeInUp"
-                                data-wow-delay="{{ 0.2 * $index }}s"
+                                class="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition duration-300 max-w-sm mx-auto"
                             >
-                                <div class="position-relative">
-                                    <img
-                                        class="img-fluid"
-                                        src="{{ asset("storage/" . $team->photo) }}"
-                                        alt="{{ $team->name }}"
-                                    />
-                                    <div class="team-social text-center">
-                                        @if ($team->facebook)
-                                            <a
-                                                class="btn btn-square"
-                                                href="{{ $team->facebook }}"
-                                                target="_blank"
-                                            >
-                                                <i
-                                                    class="fab fa-facebook-f"
-                                                ></i>
-                                            </a>
-                                        @endif
-
-                                        @if ($team->twitter)
-                                            <a
-                                                class="btn btn-square"
-                                                href="{{ $team->twitter }}"
-                                                target="_blank"
-                                            >
-                                                <i class="fab fa-twitter"></i>
-                                            </a>
-                                        @endif
-
-                                        @if ($team->instagram)
-                                            <a
-                                                class="btn btn-square"
-                                                href="{{ $team->instagram }}"
-                                                target="_blank"
-                                            >
-                                                <i class="fab fa-instagram"></i>
-                                            </a>
-                                        @endif
+                                <!-- Desktop & Tablet -->
+                                <div class="hidden sm:block">
+                                    <div class="h-40 overflow-hidden">
+                                        <img
+                                            src="{{ asset('storage/' . $blog->image) }}"
+                                            alt="Berita"
+                                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                        />
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="text-xs text-gray-500 mb-1">
+                                            {{ $blog->created_at->format('d M Y') }}
+                                        </div>
+                                        <h3 class="text-sm font-semibold text-gray-800 mb-1">
+                                            {{ $blog->title }}
+                                        </h3>
+                                        <p class="text-sm text-gray-600 mb-2">
+                                            {{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 70, '...') }}
+                                        </p>
+                                        <a
+                                            href="{{ $blog->instagram_link }}"
+                                            class="text-green-600 text-sm font-medium"
+                                        >
+                                            Selengkapnya →
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="bg-light text-center p-4">
-                                    <h3 class="mt-2 title-Section">
-                                        {{ $team->name }}
-                                    </h3>
-                                    <span class="text-primary">
-                                        {{ $team->position }}
-                                    </span>
+
+                                <!-- Mobile -->
+                                <div class="sm:hidden flex gap-4 p-4">
+                                    <img
+                                        src="{{ asset('storage/' . $blog->image) }}"
+                                        alt="Berita"
+                                        class="w-24 h-24 object-cover rounded-md flex-shrink-0"
+                                    />
+                                    <div class="flex flex-col justify-between">
+                                        <div class="text-xs text-gray-500">
+                                            {{ $blog->created_at->format('d M Y') }}
+                                        </div>
+                                        <h3 class="text-sm font-semibold text-gray-800">
+                                            {{ $blog->title }}
+                                        </h3>
+                                        <p class="text-xs text-gray-600">
+                                            {{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 60, '...') }}
+                                        </p>
+                                        <a
+                                            href="{{ $blog->instagram_link }}"
+                                            class="text-green-600 text-xs font-medium"
+                                        >
+                                            Selengkapnya →
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <!-- Team End -->
-
-        <!-- Program Start -->
-        <div id="Program" class="container-xxl py-5">
-            <div class="container">
-                <div
-                    class="text-center mx-auto mb-5 wow fadeInUp"
-                    data-wow-delay="0.1s"
-                    style="max-width: 600px"
-                >
-                    @php
-                        $section = sectionHeader("program");
-                    @endphp
-
-                    <h4 class="section-title">{{ $section->title }}</h4>
-                    <h1 class="display-5 mb-4 title-Section">
-                        {{ $section->subtitle }}
-                    </h1>
-                </div>
-                <div class="row g-4">
-                    @foreach ($programs as $program)
-                        <div
-                            class="col-lg-4 col-md-6 wow fadeInUp"
-                            data-wow-delay="0.1s"
-                        >
-                            <div
-                                class="program-item d-flex position-relative text-center h-100"
-                            >
-                                <img
-                                    class="bg-img"
-                                    src="{{ asset("storage/" . $program->image) }}"
-                                    alt=""
-                                />
-                                <div class="program-text p-5">
-                                    <img
-                                        src="{{ asset("storage/" . $program->icon) }}"
-                                        alt=""
-                                        style="height: 70px"
-                                        class="mb-3"
-                                    />
-                                    <h3 class="mb-3 title-program">
-                                        {{ $program->title }}
-                                    </h3>
-                                    <p class="mb-4">
-                                        {{ $program->description }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <!-- Program End -->
-
-        <!-- Lembaga Start -->
-        <div id="lembaga" class="py-5">
-            <div class="container py-5">
-                <div class="text-center mb-5">
-                    <h4 class="section-title text-primary">
-                        Lembaga Pendukung
-                    </h4>
-                </div>
-                <div class="swiper lembaga-slider">
-                    <div class="swiper-wrapper">
-                        @foreach ($lembagas as $lembaga)
-                            <div class="swiper-slide text-center">
-                                @if ($lembaga->logo)
-                                    <img
-                                        src="{{ asset("storage/" . $lembaga->logo) }}"
-                                        alt="{{ $lembaga->nama_lembaga }}"
-                                        class="lembaga-logo"
-                                    />
-                                @else
-                                    <img
-                                        src="{{ asset("images/default-logo.png") }}"
-                                        alt="Default Logo"
-                                        class="lembaga-logo"
-                                    />
-                                @endif
-                                <h5 class="text-title modern-title">
-                                    {{ $lembaga->nama_lembaga }}
-                                </h5>
                             </div>
                         @endforeach
                     </div>
-                    <div class="swiper-pagination modern-pagination"></div>
+                @endif
+
+                <div class="text-center mt-10">
+                    <a
+                        href="#"
+                        class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md"
+                    >
+                        Lihat Semua Berita
+                    </a>
                 </div>
             </div>
-        </div>
-        <!-- Lembaga End -->
+        </section>
 
-        <!-- Blog Start -->
-        <div id="blog" class="py-5 bg-light">
-            <div class="container">
-                <div class="text-center mb-5">
-                    @php
-                        $section = sectionHeader("blog");
-                    @endphp
+        {{--
+            <div class="container relative flex flex-col justify-between h-full max-w-6xl px-10 mx-auto xl:px-0 mt-5">
+            <h2 class="mb-1 text-3xl font-extrabold leading-tight text-gray-900">Services</h2>
+            <p class="mb-12 text-lg text-gray-500">Here is a few of the awesome Services we provide.</p>
+            <div class="w-full">
+            <div class="flex flex-col w-full mb-10 sm:flex-row">
+            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
+            <div class="relative h-full ml-0 mr-0 sm:mr-10">
+            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"></span>
+            <div class="relative h-full p-5 bg-white border-2 border-indigo-500 rounded-lg">
+            <div class="flex items-center -mt-1">
+            <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">DAPP Development</h3>
+            </div>
+            <p class="mt-3 mb-1 text-xs font-medium text-indigo-500 uppercase">------------</p>
+            <p class="mb-2 text-gray-600">A decentralized application (dapp) is an application built on a
+            decentralized network that combines a smart contract and a frontend user interface.</p>
+            </div>
+            </div>
+            </div>
+            <div class="w-full sm:w-1/2">
+            <div class="relative h-full ml-0 md:mr-10">
+            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-purple-500 rounded-lg"></span>
+            <div class="relative h-full p-5 bg-white border-2 border-purple-500 rounded-lg">
+            <div class="flex items-center -mt-1">
+            <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">Web 3.0 Development</h3>
+            </div>
+            <p class="mt-3 mb-1 text-xs font-medium text-purple-500 uppercase">------------</p>
+            <p class="mb-2 text-gray-600">Web 3.0 is the third generation of Internet services that will
+            focus on understanding and analyzing data to provide a semantic web.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="flex flex-col w-full mb-5 sm:flex-row">
+            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
+            <div class="relative h-full ml-0 mr-0 sm:mr-10">
+            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-blue-400 rounded-lg"></span>
+            <div class="relative h-full p-5 bg-white border-2 border-blue-400 rounded-lg">
+            <div class="flex items-center -mt-1">
+            <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">Project Audit</h3>
+            </div>
+            <p class="mt-3 mb-1 text-xs font-medium text-blue-400 uppercase">------------</p>
+            <p class="mb-2 text-gray-600">A Project Audit is a formal review of a project, which is intended
+            to assess the extent up to which project management standards are being upheld.</p>
+            </div>
+            </div>
+            </div>
+            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
+            <div class="relative h-full ml-0 mr-0 sm:mr-10">
+            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-yellow-400 rounded-lg"></span>
+            <div class="relative h-full p-5 bg-white border-2 border-yellow-400 rounded-lg">
+            <div class="flex items-center -mt-1">
+            <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">Hacking / RE</h3>
+            </div>
+            <p class="mt-3 mb-1 text-xs font-medium text-yellow-400 uppercase">------------</p>
+            <p class="mb-2 text-gray-600">A security hacker is someone who explores methods for breaching
+            defenses and exploiting weaknesses in a computer system or network.</p>
+            </div>
+            </div>
+            </div>
+            <div class="w-full sm:w-1/2">
+            <div class="relative h-full ml-0 md:mr-10">
+            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-500 rounded-lg"></span>
+            <div class="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
+            <div class="flex items-center -mt-1">
+            <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">Bot/Script Development</h3>
+            </div>
+            <p class="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">------------</p>
+            <p class="mb-2 text-gray-600">Bot development frameworks were created as advanced software tools
+            that eliminate a large amount of manual work and accelerate the development process.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+        --}}
+        <!-- source:https://tailwind.besoeasy.com -->
 
-                    <h4 class="section-title">{{ $section->title }}</h4>
-                    <h1 class="display-5 mb-4 title-Section">
-                        {{ $section->subtitle }}
-                    </h1>
+        <!-- Testimonials Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Testimoni</h2>
+                    <div class="w-20 h-1 bg-green-500 mx-auto"></div>
                 </div>
-                <div class="row g-4 justify-content-center">
-                    @foreach ($blogs as $blog)
-                        <div class="col-lg-3 col-md-6 d-flex">
-                            <div class="card shadow-sm h-100 border-0 w-100">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="testimonial-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
                                 <img
-                                    src="{{ asset("storage/" . $blog->image) }}"
-                                    class="card-img-top"
-                                    alt="{{ $blog->title }}"
-                                    style="height: 350px; object-fit: cover"
+                                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                                    alt="Testimoni"
+                                    class="w-full h-full object-cover"
                                 />
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title text-title">
-                                        {{ $blog->title }}
-                                    </h5>
-                                    <p class="card-text text-muted">
-                                        {{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 100, "...") }}
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Bapak Andi</h4>
+                                <p class="text-gray-500 text-sm">Orang Tua Santri</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "Ponpes Selfa telah membantu anak saya menjadi lebih disiplin dan
+                            mandiri. Prestasi akademiknya juga meningkat signifikan."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img
+                                    src="https://randomuser.me/api/portraits/women/45.jpg"
+                                    alt="Testimoni"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Ibu Siti</h4>
+                                <p class="text-gray-500 text-sm">Orang Tua Santri</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "Sangat puas dengan pendidikan agama yang diberikan. Anak saya sekarang
+                            sudah hafal 3 juz dan rajin shalat berjamaah."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                                <img
+                                    src="https://randomuser.me/api/portraits/men/75.jpg"
+                                    alt="Testimoni"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Bapak Budi</h4>
+                                <p class="text-gray-500 text-sm">Alumni</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "Pendidikan di Ponpes Selfa sangat berkesan. Saya sekarang bisa kuliah
+                            di luar negeri berkat beasiswa dari hafalan Qur'an yang diajarkan di
+                            sini."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Hubungi Kami</h2>
+                    <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+                </div>
+
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">Informasi Kontak</h3>
+
+                            <div class="flex items-start mb-4">
+                                <div class="text-green-600 mr-4 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Alamat</h4>
+                                    <p class="text-gray-600">
+                                        Jl. Pendidikan No. 123, Kec. Ciputat, Kota Tangerang
+                                        Selatan, Banten 15411
                                     </p>
-                                    <div
-                                        class="mt-auto d-flex justify-content-between align-items-center"
-                                    >
-                                        {{-- <a href="{{ route('blog.show', $blog->id) }}" class="btn btn-sm btn-outline-primary">Baca Selengkapnya</a> --}}
-                                        @if ($blog->instagram_link)
-                                            <a
-                                                href="{{ $blog->instagram_link }}"
-                                                target="_blank"
-                                                class="text-danger fs-4"
-                                            >
-                                                <i class="bi bi-instagram"></i>
-                                            </a>
-                                        @endif
-                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-4">
+                                <div class="text-green-600 mr-4 mt-1">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Telepon</h4>
+                                    <p class="text-gray-600">(021) 12345678</p>
+                                    <p class="text-gray-600">0812-3456-7890 (WhatsApp)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-4">
+                                <div class="text-green-600 mr-4 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">info@ponpesselfa.sch.id</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="text-green-600 mr-4 mt-1">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Jam Operasional</h4>
+                                    <p class="text-gray-600">Senin - Jumat: 08.00 - 16.00 WIB</p>
+                                    <p class="text-gray-600">Sabtu: 08.00 - 12.00 WIB</p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <!-- Blog End -->
 
-        <!-- Testimonial Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div
-                    class="text-center mx-auto mb-5 wow fadeInUp"
-                    data-wow-delay="0.1s"
-                    style="max-width: 600px"
-                >
-                    <h4 class="section-title">Testimoni</h4>
-                    <h1 class="display-5 mb-4 title-Section">
-                        Pendapat Wali Santri Tentang Pondok
-                    </h1>
-                </div>
-                <div
-                    class="owl-carousel testimonial-carousel wow fadeInUp"
-                    data-wow-delay="0.1s"
-                >
-                    <div
-                        class="testimonial-item text-center"
-                        data-dot="<img class='img-fluid' src={{ asset("assets/img/testimonial-1.jpg") }} alt=''>"
-                    >
-                        <p class="fs-5">
-                            Clita clita tempor justo dolor ipsum amet kasd amet
-                            duo justo duo duo labore sed sed. Magna ut diam sit
-                            et amet stet eos sed clita erat magna elitr erat sit
-                            sit erat at rebum justo sea clita.
-                        </p>
-                        <h3>Client Name</h3>
-                        <span class="text-primary">Wali Santri</span>
-                    </div>
-                    <div
-                        class="testimonial-item text-center"
-                        data-dot="<img class='img-fluid' src={{ asset("assets/img/testimonial-2.jpg") }} alt=''>"
-                    >
-                        <p class="fs-5">
-                            Clita clita tempor justo dolor ipsum amet kasd amet
-                            duo justo duo duo labore sed sed. Magna ut diam sit
-                            et amet stet eos sed clita erat magna elitr erat sit
-                            sit erat at rebum justo sea clita.
-                        </p>
-                        <h3>Client Name</h3>
-                        <span class="text-primary">Wali Santri</span>
-                    </div>
-                    <div
-                        class="testimonial-item text-center"
-                        data-dot="<img class='img-fluid' src={{ asset("assets/img/testimonial-3.jpg") }} alt=''>"
-                    >
-                        <p class="fs-5">
-                            Clita clita tempor justo dolor ipsum amet kasd amet
-                            duo justo duo duo labore sed sed. Magna ut diam sit
-                            et amet stet eos sed clita erat magna elitr erat sit
-                            sit erat at rebum justo sea clita.
-                        </p>
-                        <h3>Client Name</h3>
-                        <span class="text-primary">Wali Santri</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
-
-        <!-- Feature Start -->
-        {{--
-            <div class="container-xxl py-5">
-            <div class="container">
-            <div class="row g-5">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-            <h4 class="section-title">Why Choose Us!</h4>
-            <h1 class="display-5 mb-4">Why You Should Trust Us? LSelengkapnya About Us!</h1>
-            <p class="mb-4">
-            Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-            sed stet lorem sit clita duo justo magna dolore erat amet
-            </p>
-            <div class="row g-4">
-            <div class="col-12">
-            <div class="d-flex align-items-start">
-            <img class="flex-shrink-0" src="img/icons/icon-2.png" alt="Icon" />
-            <div class="ms-4">
-            <h3>Design Approach</h3>
-            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-            </div>
-            </div>
-            </div>
-            <div class="col-12">
-            <div class="d-flex align-items-start">
-            <img class="flex-shrink-0" src="img/icons/icon-3.png" alt="Icon" />
-            <div class="ms-4">
-            <h3>Innovative Solutions</h3>
-            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-            </div>
-            </div>
-            </div>
-            <div class="col-12">
-            <div class="d-flex align-items-start">
-            <img class="flex-shrink-0" src="img/icons/icon-4.png" alt="Icon" />
-            <div class="ms-4">
-            <h3>Project Management</h3>
-            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-            <div class="feature-img">
-            <img class="img-fluid" src="img/about-2.jpg" alt="" />
-            <img class="img-fluid" src="img/about-1.jpg" alt="" />
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-        --}}
-        <!-- Feature End -->
-
-        <!-- Project Start -->
-        {{--
-            <div class="container-xxl project py-5">
-            <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px">
-            <h4 class="section-title">Our Projects</h4>
-            <h1 class="display-5 mb-4 title-Section">Visit Our Latest Projects And Our Innovative Works</h1>
-            </div>
-            <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="col-lg-4">
-            <div class="nav nav-pills d-flex justify-content-between w-100 h-100 me-4">
-            <button
-            class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4 active"
-            data-bs-toggle="pill"
-            data-bs-target="#tab-pane-1"
-            type="button"
-            >
-            <h3 class="m-0">01. Modern Complex</h3>
-            </button>
-            <button
-            class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4"
-            data-bs-toggle="pill"
-            data-bs-target="#tab-pane-2"
-            type="button"
-            >
-            <h3 class="m-0">02. Royal Hotel</h3>
-            </button>
-            <button
-            class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4"
-            data-bs-toggle="pill"
-            data-bs-target="#tab-pane-3"
-            type="button"
-            >
-            <h3 class="m-0">03. Mexwel Buiding</h3>
-            </button>
-            <button
-            class="nav-link w-100 d-flex align-items-center text-start p-4 mb-0"
-            data-bs-toggle="pill"
-            data-bs-target="#tab-pane-4"
-            type="button"
-            >
-            <h3 class="m-0">04. Shopping Complex</h3>
-            </button>
-            </div>
-            </div>
-            <div class="col-lg-8">
-            <div class="tab-content w-100">
-            <div class="tab-pane fade show active" id="tab-pane-1">
-            <div class="row g-4">
-            <div class="col-md-6" style="min-height: 350px">
-            <div class="position-relative h-100">
-            <img class="position-absolute img-fluid w-100 h-100" src="img/project-1.jpg" style="object-fit: cover" alt="" />
-            </div>
-            </div>
-            <div class="col-md-6">
-            <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-            <p class="mb-4">
-            Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et
-            sit, sed stet lorem sit clita duo justo magna dolore erat amet
-            </p>
-            <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-            <a href="" class="btn btn-primary py-3 px-5 mt-3">Selengkapnya</a>
-            </div>
-            </div>
-            </div>
-            <div class="tab-pane fade" id="tab-pane-2">
-            <div class="row g-4">
-            <div class="col-md-6" style="min-height: 350px">
-            <div class="position-relative h-100">
-            <img class="position-absolute img-fluid w-100 h-100" src="img/project-2.jpg" style="object-fit: cover" alt="" />
-            </div>
-            </div>
-            <div class="col-md-6">
-            <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-            <p class="mb-4">
-            Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et
-            sit, sed stet lorem sit clita duo justo magna dolore erat amet
-            </p>
-            <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-            <a href="" class="btn btn-primary py-3 px-5 mt-3">Selengkapnya</a>
-            </div>
-            </div>
-            </div>
-            <div class="tab-pane fade" id="tab-pane-3">
-            <div class="row g-4">
-            <div class="col-md-6" style="min-height: 350px">
-            <div class="position-relative h-100">
-            <img class="position-absolute img-fluid w-100 h-100" src="img/project-3.jpg" style="object-fit: cover" alt="" />
-            </div>
-            </div>
-            <div class="col-md-6">
-            <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-            <p class="mb-4">
-            Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et
-            sit, sed stet lorem sit clita duo justo magna dolore erat amet
-            </p>
-            <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-            <a href="" class="btn btn-primary py-3 px-5 mt-3">Selengkapnya</a>
-            </div>
-            </div>
-            </div>
-            <div class="tab-pane fade" id="tab-pane-4">
-            <div class="row g-4">
-            <div class="col-md-6" style="min-height: 350px">
-            <div class="position-relative h-100">
-            <img class="position-absolute img-fluid w-100 h-100" src="img/project-4.jpg" style="object-fit: cover" alt="" />
-            </div>
-            </div>
-            <div class="col-md-6">
-            <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-            <p class="mb-4">
-            Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et
-            sit, sed stet lorem sit clita duo justo magna dolore erat amet
-            </p>
-            <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-            <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-            <a href="" class="btn btn-primary py-3 px-5 mt-3">Selengkapnya</a>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-        --}}
-        <!-- Project End -->
-
-        <!-- Footer Start -->
-        <div
-            class="container-fluid bg-footer text-body footer mt-5 pt-5 px-0 wow fadeIn"
-            data-wow-delay="0.1s"
-        >
-            <div class="container py-5">
-                <div class="row g-5 align-items-start">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="d-flex align-items-center">
-                            <!-- <img src="img/IconFalahNoBg.png" alt="Logo" width="40"> -->
-                            <h3 class="title-footer mb-4">Sayf El Falah</h3>
+                        <div class="mt-6 bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">Lokasi Kami</h3>
+                            <div class="aspect-w-16 aspect-h-9">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.317239755586!2d106.8225093147693!3d-6.352966295404291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec6b07b68ea5%3A0x17da46bdf9308386!2sTangerang%20Selatan%2C%20South%20Tangerang%20City%2C%20Banten!5e0!3m2!1sen!2sid!4v1625555555555!5m2!1sen!2sid"
+                                    width="100%"
+                                    height="300"
+                                    style="border: 0"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    class="rounded-lg"
+                                ></iframe>
+                            </div>
                         </div>
-                        <p class="mt-2 list-footer">
-                            Sayf El Falah adalah lembaga pendidikan berbasis
-                            pesantren yang berfokus pada pembinaan akhlak,
-                            akademik, dan keterampilan santri untuk masa depan
-                            yang lebih baik.
-                        </p>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <h3 class="title-footer mb-4">Informasi</h3>
-                        <a class="btn btn-link" href="">Visi & Misi</a>
-                        <a class="btn btn-link" href="">Alur Pendidikan</a>
-                        <a class="btn btn-link" href="">Lembaga</a>
-                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">Kirim Pesan</h3>
+                            <form>
+                                <div class="mb-4">
+                                    <label for="name" class="block text-gray-700 mb-2">
+                                        Nama Lengkap
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    />
+                                </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <h3 class="title-footer mb-4">Kontak Kami</h3>
-                        <p class="mb-2">
-                            <i class="fa fa-phone-alt text-primary me-2"></i>
-                            <a
-                                class="list-footer"
-                                href="https://wa.me/6285217176495"
-                            >
-                                Ustadz Furqan Syafrizal
-                            </a>
+                                <div class="mb-4">
+                                    <label for="email" class="block text-gray-700 mb-2">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="phone" class="block text-gray-700 mb-2">
+                                        Nomor Telepon
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="subject" class="block text-gray-700 mb-2">
+                                        Subjek
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="message" class="block text-gray-700 mb-2">
+                                        Pesan
+                                    </label>
+                                    <textarea
+                                        id="message"
+                                        rows="4"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    ></textarea>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md w-full"
+                                >
+                                    Kirim Pesan
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="daftar" class="py-16 bg-green-600 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold mb-6">Daftarkan Putra/Putri Anda Sekarang</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">
+                    Bergabunglah dengan Ponpes Selfa untuk pendidikan terbaik yang mengintegrasikan
+                    ilmu agama dan umum dengan metode pembelajaran modern.
+                </p>
+                <a
+                    href="#"
+                    class="inline-block bg-white text-green-600 hover:bg-gray-100 px-8 py-4 rounded-full font-bold text-lg transition shadow-lg"
+                >
+                    Daftar Sekarang
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white pt-12 pb-6">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Ponpes Selfa</h3>
+                        <p class="text-gray-400 mb-4">
+                            Pondok Pesantren Modern Selfa, membentuk generasi Qur'ani yang berakhlak
+                            mulia, berwawasan luas, dan mandiri.
                         </p>
-                        <p class="mb-2 list-footer">
-                            <i class="fa fa-envelope text-primary"></i>
-                            pesantrensayfelfalah@gmail.com
-                        </p>
-                        <div class="d-flex pt-2">
-                            <a
-                                class="btn btn-square btn-outline-body me-1"
-                                href=""
-                            >
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a
-                                class="btn btn-square btn-outline-body me-1"
-                                href=""
-                            >
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a
-                                class="btn btn-square btn-outline-body me-1"
-                                href=""
-                            >
-                                <i class="fab fa-youtube"></i>
+                            <a href="#" class="text-gray-400 hover:text-white transition">
+                                <i class="fab fa-instagram"></i>
                             </a>
-                            <a
-                                class="btn btn-square btn-outline-body me-0"
-                                href=""
-                            >
-                                <i class="fab fa-linkedin-in"></i>
+                            <a href="#" class="text-gray-400 hover:text-white transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition">
+                                <i class="fab fa-youtube"></i>
                             </a>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <h3 class="title-footer mb-4">Address</h3>
-                        <p class="mb-2 list-footer">
-                            <i
-                                class="fa fa-map-marker-alt text-primary me-3"
-                            ></i>
-                            Jl. Wahidin Sudiro Husodo No.36, Bramen, Sekarsuli,
-                            Kec. Klaten Utara, Kabupaten Klaten, Jawa Tengah
-                            57438
-                        </p>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1222.7013959293104!2d110.60411067090085!3d-7.692333357861694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a43f01ae7ca55%3A0x3052ee63172a145f!2sMasjid%20Al-Muhajirin!5e0!3m2!1sid!2sid!4v1743005025922!5m2!1sid!2sid"
-                            width="100%"
-                            height="200"
-                            style="border: 0; border-radius: 10px"
-                            allowfullscreen=""
-                            loading="lazy"
-                        ></iframe>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Info Pondok</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Sejarah
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Visi & Misi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Struktur Organisasi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Fasilitas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Prestasi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Informasi</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Pendaftaran
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Biaya Pendidikan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Kalender Akademik
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    Beasiswa
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white transition">
+                                    FAQ
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Kontak Kami</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-2 text-gray-400"></i>
+                                <span class="text-gray-400">
+                                    Jl. Pendidikan No. 123, Ciputat, Tangerang Selatan
+                                </span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone-alt mr-2 text-gray-400"></i>
+                                <span class="text-gray-400">(021) 12345678</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope mr-2 text-gray-400"></i>
+                                <span class="text-gray-400">info@ponpesselfa.sch.id</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <div class="border-t border-gray-700 pt-6 text-center text-gray-400">
+                    <p>&copy; 2023 Ponpes Selfa. All rights reserved.</p>
+                </div>
             </div>
-        </div>
-        <!-- Footer End -->
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
+        <script src="https://kit.fontawesome.com/3f1db990a0.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-        {{-- DONASI START --}}
-        {{--
-            <a
-            href="#"
-            class="btn btn-lg btn-primary btn-lg-square floating-donation"
-            id="donationButton"
-            >
-            <i class="bi bi-heart-fill"></i>
-            </a>
-        --}}
-        <div
-            class="donation-message"
-            id="donationMessage"
-            style="display: none"
-        >
-            Ayo Donasi Sekarang juga...!
-        </div>
-        <div class="donation-menu" id="donationMenu" style="display: none">
-            <a href="" class="donation-item">
-                Pendidikan
-            </a>
-            <a href="https://ayobuatbaik.com/galangdana/amount/warung-makan-gratis-untuk-pejuang-keluarga" class="donation-item">
-                Sosial Kemanusiaan
-            </a>
-            <a href="" class="donation-item">
-                Kesehatan
-            </a>
-        </div>
-        {{-- DONASI END --}}
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-        <!-- JavaScript Libraries -->
-
-        {{-- Swiper --}}
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset("assets/lib/wow/wow.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/easing/easing.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/waypoints/waypoints.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/counterup/counterup.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/owlcarousel/owl.carousel.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/tempusdominus/js/moment.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/tempusdominus/js/moment-timezone.min.js") }}"></script>
-        <script src="{{ asset("assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js") }}"></script>
-
-        <!-- Template Javascript -->
-        <script src="{{ asset("assets/js/main.js") }}"></script>
     </body>
 </html>

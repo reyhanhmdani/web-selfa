@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Pendaftaran Ponpes Selfa</title>
-        @vite(["resources/css/app.css", "resources/js/app.js"])
-    </head>
-    <body class="bg-gray-100 font-sans">
-        <div class="max-w-xl mx-auto my-12 p-8 bg-white rounded-xl shadow-md">
+@extends('layouts.auth')
+
+@section('content')
+         <div class="max-w-xl mx-auto my-12 p-8 bg-white rounded-xl shadow-md">
             <h1 class="text-3xl font-bold text-center text-green-600 mb-6">
                 Pendaftaran Ponpes Selfa
             </h1>
@@ -138,10 +132,4 @@
                 </div>
             </form>
         </div>
-
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
-    </body>
-</html>
+@endsection

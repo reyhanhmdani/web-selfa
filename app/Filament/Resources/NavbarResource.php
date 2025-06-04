@@ -37,6 +37,12 @@ class NavbarResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->label('Label'),
+                        Forms\Components\TextInput::make('icon')
+                            ->label('Nama Ikon (Font Awesome)')
+                            ->placeholder('contoh: home, info-circle, envelope')
+                            ->maxLength(50)
+                            ->helperText('Hanya isi nama ikon Font Awesome tanpa "fa-solid fa-"')
+                            ->nullable(),
                         Forms\Components\Select::make('type')
                             ->options([
                                 'link' => 'Internal Link',

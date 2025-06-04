@@ -15,7 +15,7 @@ class PendaftaranController extends Controller
 
     public function index()
     {
-        return view('pendaftaran');
+        return view('pages.daftar');
     }
 
     public function submit(Request $request)

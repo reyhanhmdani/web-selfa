@@ -78,8 +78,7 @@ class AboutResource extends Resource
                     })
                     ->getUploadedFileNameForStorageUsing(function ($file) {
                         return time() . '-' . $file->getClientOriginalName();
-                    })
-                    ->required(),
+                    }),
             ]);
     }
 
