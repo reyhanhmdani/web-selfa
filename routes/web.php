@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', [BlogController::class, 'index'])->name('index');
 
 // Untuk menampilkan Semua gambar dalam satu link
-Route::get('/santri/{id}/documents',[DokumentsasiSantriController::class, 'dokumentId'])->name('santri.documents');
+Route::get('/dokumentasi/{tipe}/{id}', [DokumentsasiSantriController::class, 'dokumentId'])->name('documents');
+
 
 Route::get('/santri/export/pdf', [SantriExportControler::class, 'exportAllPdf'])->name('santri.export.all.pdf');
 Route::get('/santri/{santri}/export-pdf', [SantriExportControler::class, 'exportPdf'])

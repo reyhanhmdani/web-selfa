@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Team;
 use App\Models\About;
-use App\Models\Lembaga;
 use App\Models\Navbar;
+use App\Models\Lembaga;
 use App\Models\Program;
 use App\Models\Student;
+use App\Models\Visimisi;
+use App\Models\GaleriFoto;
 use App\Models\Pendidikan;
+use App\Models\ContactInfo;
 use Illuminate\Http\Request;
 use App\Models\SectionHeader;
 
@@ -30,7 +33,15 @@ class LandingController extends Controller
         $lembagas = Lembaga::all();
         $totalLembaga = Lembaga::count();
         $teams = Team::all();
+        $galeriFoto = GaleriFoto::all();
+        $visiMisi = Visimisi::first();
 
-        return view('pages.home', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams'));
+        // Kontak
+        $alamat = ContactInfo::where('key', 'alamat')->first()?->value;
+        $telepon = ContactInfo::where('key', 'telepon')->first()?->value;
+        $email = ContactInfo::where('key', 'email')->first()?->value;
+        $jam = ContactInfo::where('key', 'jam')->first()?->value;
+
+        return view('pages.home', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi', 'alamat', 'telepon', 'email', 'jam'));
     }
 }

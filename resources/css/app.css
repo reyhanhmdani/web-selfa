@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
     --primary: #00ab66;
     --yellow: #febe10;
@@ -10,16 +9,51 @@
     --secondary: #0f499b;
 }
 
+/* tombol melayang */
+/* Custom CSS for the bounce animation */
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+.fa-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* Smaller floating button */
+.floating-container {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+/* Make sure the link covers the entire button area */
+.floating-content {
+    display: block;
+    text-decoration: none;
+}
 
 /* font */
 
 /* title section color */
 .title-section {
     color: var(--primary);
-    /* letter-spacing: 3px; */
     text-transform: uppercase;
-    /* font-weight: 500; */
-    /* font-style: arial; */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1.5px;
 }
 
 /* sub title section color */
@@ -28,66 +62,67 @@
 }
 
 .floating-nav {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border-radius: 50px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
 }
 
 .floating-nav-mobile {
-  width: 90%;
-  justify-content: space-around;
+    width: 90%;
+    justify-content: space-around;
 }
 
 .dropdown:hover .dropdown-menu {
-  display: block;
+    display: block;
 }
 
 .dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 200px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0;
-  top: 100%; /* posisi default desktop */
-  left: 0;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    top: 100%; /* posisi default desktop */
+    left: 0;
 }
 
 /* Saat dibuka */
 .dropdown.open .dropdown-menu {
-  display: block;
+    display: block;
 }
 
 /* Default posisi: ke bawah */
 .dropdown-menu {
-  top: 100%;
-  left: 0;
+    top: 100%;
+    left: 0;
 }
 
 .swiper-slide {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
 }
 
 .swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 /* Program */
 .group-hover\:scale-105 {
     transform: scale(1.05);
 }
-
 
 /* Lembaga */
 .lembaga-slider .swiper-slide {
@@ -111,43 +146,23 @@
     height: 80px; /* dikurangi dari 100px */
 }
 
-
-.testimonial-card {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-5px);
-}
-
-.floating-btn {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 999;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-}
-
 @media (min-width: 768px) {
-  .floating-nav {
-    bottom: auto;
-    top: 1rem;
-    left: 1rem;
-    right: 1rem;
-    transform: none;
-    width: auto;
-    justify-content: space-between;
-    padding: 0.75rem 2rem;
-  }
+    .floating-nav {
+        bottom: auto;
+        top: 1rem;
+        left: 3rem;
+        right: 3rem;
+        transform: none;
+        width: auto;
+        justify-content: space-between;
+        padding: 0.75rem 2rem;
+    }
 }
 
 @media (max-width: 767px) {
-  .dropdown-menu {
-    top: auto;
-    bottom: 100%;
-    margin-bottom: 0.5rem;
-  }
+    .dropdown-menu {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 0.5rem;
+    }
 }

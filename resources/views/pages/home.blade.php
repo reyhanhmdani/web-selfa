@@ -2,9 +2,9 @@
 
 @section('content')
     <nav class="floating-nav floating-nav-mobile md:floating-nav">
-        <div class="hidden md:flex items-center">
+        <div class="hidden items-center md:flex">
             @if ($navbar && $navbar->logo)
-                <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="h-10 mr-3" />
+                <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-10" />
             @endif
 
             <a href="#" class="text-2xl font-bold text-green-600">
@@ -18,22 +18,22 @@
                     @if (($nav['type'] ?? '') === 'dropdown' && isset($nav['children']))
                         <div class="dropdown relative">
                             <button
-                                class="p-2 md:px-4 rounded-full hover:bg-green-50 text-gray-700 hover:text-green-600 transition flex items-center"
+                                class="flex items-center rounded-full p-2 text-gray-700 transition hover:bg-green-50 hover:text-green-600 md:px-4"
                             >
                                 @if (! empty($nav['icon']))
                                     <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
                                 @endif
 
-                                <span class="hidden md:inline ml-2">
+                                <span class="ml-2 hidden md:inline">
                                     {{ $nav['label'] }}
                                 </span>
                                 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
                             </button>
-                            <div class="dropdown-menu hidden absolute transition-all duration-300">
+                            <div class="dropdown-menu absolute hidden transition-all duration-300">
                                 @foreach ($nav['children'] as $child)
                                     <a
                                         href="{{ $child['url'] }}"
-                                        class="block px-4 py-2 hover:bg-green-50 text-gray-700 transition {{ ($child['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }}"
+                                        class="{{ ($child['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} block px-4 py-2 text-gray-700 transition hover:bg-green-50"
                                         {{ ($child['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
                                     >
                                         @if (! empty($child['icon']))
@@ -50,14 +50,14 @@
                     @else
                         <a
                             href="{{ $nav['url'] }}"
-                            class="p-2 md:px-4 rounded-full hover:bg-green-50 text-gray-700 hover:text-green-600 transition {{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} {{ request()->is(trim($nav['url'], '/')) ? 'text-green-600 font-semibold' : '' }}"
+                            class="{{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} {{ request()->is(trim($nav['url'], '/')) ? 'font-semibold text-green-600' : '' }} rounded-full p-2 text-gray-700 transition hover:bg-green-50 hover:text-green-600 md:px-4"
                             {{ ($nav['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
                         >
                             @if (! empty($nav['icon']))
                                 <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
                             @endif
 
-                            <span class="hidden md:inline ml-2">
+                            <span class="ml-2 hidden md:inline">
                                 {{ $nav['label'] }}
                             </span>
                         </a>
@@ -71,7 +71,7 @@
                 @if ($nav['button'] ?? false)
                     <a
                         href="{{ $nav['url'] }}"
-                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition shadow-md {{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }}"
+                        class="{{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} rounded-full bg-green-600 px-4 py-2 text-white shadow-md transition hover:bg-green-700"
                         {{ ($nav['type'] ?? '') === 'external' ? 'target=_blank' : '' }}
                     >
                         {{ $nav['label'] }}
@@ -82,56 +82,67 @@
     </nav>
 
     <!-- Floating Register Button -->
-    <a
-        href="#daftar"
-        class="floating-btn bg-green-600 hover:bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
-    >
-        <i class="fas fa-user-plus"></i>
-    </a>
+    <div class="floating-container right-5 top-5 md:bottom-5 md:right-5 md:top-auto">
+        <a href="#kontak" class="floating-content group">
+            <div
+                class="flex items-center gap-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 px-4 py-2 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            >
+                <div
+                    class="floating-icon flex h-9 w-9 items-center justify-center rounded-full bg-white text-lg text-blue-500 transition-transform group-hover:rotate-12"
+                >
+                    <i class="fas fa-headset"></i>
+                </div>
+                <span class="floating-text hidden whitespace-nowrap text-sm font-medium sm:block">
+                    Butuh Bantuan? Hubungi Kami...
+                </span>
+            </div>
+        </a>
+    </div>
 
     <!-- Header Section -->
-    <!-- Section Home dengan Background Slider -->
-    <section id="home" class="relative h-screen text-white overflow-hidden">
+    <section id="Home" class="relative h-screen overflow-hidden text-white">
         <!-- Swiper Background -->
         <div class="absolute inset-0 z-0">
             <div class="swiper-container bg-swiper h-full">
                 <div class="swiper-wrapper">
                     <div
-                        class="swiper-slide bg-cover bg-center h-full"
+                        class="swiper-slide h-full bg-cover bg-center"
                         style="background-image: url('{{ asset('assets/img/masjidselfa1.jpg') }}')"
                     ></div>
                     <div
-                        class="swiper-slide bg-cover bg-center h-full"
+                        class="swiper-slide h-full bg-cover bg-center"
                         style="background-image: url('{{ asset('assets/img/masjidselfa2.jpg') }}')"
                     ></div>
                 </div>
             </div>
 
             <!-- Overlay gelap -->
-            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <div class="absolute inset-0 z-10 bg-black/60"></div>
         </div>
 
         <!-- Konten di atas slider -->
-        <div class="relative z-20 h-full flex items-center">
-            <div class="container mx-auto px-4 text-center md:text-left">
-                <div class="md:w-1/2">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        <div class="relative z-20 flex h-full items-center">
+            <div class="container mx-auto px-4 text-center">
+                <div class="mx-auto max-w-2xl">
+                    <h1 class="mb-4 text-4xl font-bold md:text-5xl">
                         Selamat Datang di Ponpes Selfa
                     </h1>
-                    <p class="text-xl mb-6">
+                    <p class="mb-6 text-xl">
                         Membentuk generasi Qur'ani yang berakhlak mulia, berwawasan luas, dan
                         mandiri.
                     </p>
-                    <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                    <div
+                        class="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-6"
+                    >
                         <a
-                            href="#about"
-                            class="bg-white text-green-700 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition shadow-md"
+                            href="#About"
+                            class="rounded-full bg-white px-5 py-2 text-sm font-semibold text-green-700 shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gray-100 md:px-6 md:py-3 md:text-base"
                         >
                             Jelajahi Lebih
                         </a>
                         <a
-                            href="#daftar"
-                            class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-green-600 transition"
+                            href="pendaftaran"
+                            class="rounded-full border-2 border-white px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-green-600 md:px-6 md:py-3 md:text-base"
                         >
                             Daftar Sekarang
                         </a>
@@ -142,42 +153,60 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
+    <section id="About" class="bg-white py-16">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+            <div class="flex flex-col items-center md:flex-row">
+                <div
+                    class="mb-8 md:mb-0 md:w-1/2 md:pr-8"
+                    data-aos="fade-right"
+                    data-aos-delay="100"
+                >
                     <img
                         src="{{ asset('storage/' . $about->image_1) }}"
                         alt="Tentang Ponpes Selfa"
-                        class="rounded-lg mx-auto"
+                        class="mx-auto rounded-lg"
                         style="width: 360px"
                     />
                 </div>
                 <div class="md:w-1/2">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                    <h2
+                        class="title-section mb-4 text-3xl font-bold text-gray-800"
+                        data-aos="fade-left"
+                        data-aos-delay="200"
+                    >
                         {{ $about->title_section }}
                     </h2>
-                    <h3 class="text-2xl font-semibold mb-4 sub-title-section">
+                    <h3
+                        class="sub-title-section mb-4 text-2xl font-semibold"
+                        data-aos="fade-left"
+                        data-aos-delay="300"
+                    >
                         {{ $about->sub_title }}
                     </h3>
-                    <p class="text-gray-600 mb-4">
+                    <p class="mb-4 text-gray-600" data-aos="fade-left" data-aos-delay="400">
                         {!! nl2br(e($about->description)) !!}
                     </p>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <div class="text-green-600 text-2xl mb-2">
+                    <div class="grid grid-cols-2 gap-4" data-aos="fade-down" data-aos-delay="400">
+                        <!-- Pendidikan Agama -->
+                        <div class="rounded-lg bg-green-50 p-4">
+                            <div class="mb-2 text-2xl text-green-600">
                                 <i class="fas fa-mosque"></i>
                             </div>
                             <h4 class="font-semibold text-gray-800">Pendidikan Agama</h4>
-                            <p class="text-gray-600 text-sm">Kurikulum agama yang komprehensif</p>
+                            <p class="text-sm text-gray-600">Kurikulum agama yang komprehensif</p>
                         </div>
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <div class="text-green-600 text-2xl mb-2">
-                                <i class="fas fa-book"></i>
+
+                        <!-- Santri Pelayan Masyarakat -->
+                        <div class="rounded-lg bg-green-50 p-4">
+                            <div class="mb-2 text-2xl text-green-600">
+                                <i class="fas fa-hands-helping"></i>
+                                <!-- Ikon lebih cocok -->
                             </div>
-                            <h4 class="font-semibold text-gray-800">Pendidikan Umum</h4>
-                            <p class="text-gray-600 text-sm">Kurikulum nasional yang berkualitas</p>
+                            <h4 class="font-semibold text-gray-800">Santri Pelayan Masyarakat</h4>
+                            <p class="text-sm text-gray-600">
+                                Membentuk jiwa sosial dan pengabdian
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -185,45 +214,94 @@
         </div>
     </section>
 
+    {{-- Visi Misi --}}
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            @php
+                $section = sectionHeader('visi&misi');
+            @endphp
+
+            <h2
+                class="title-section mb-8 text-3xl font-bold uppercase text-gray-800"
+                data-aos="fade-up"
+                data-aos-delay="200"
+                data-aos-duration="500"
+            >
+                {{ $section->title }}
+            </h2>
+            <a
+                href="{{ asset('assets/img/visi-misi.jpg') }}"
+                target="_blank"
+                class="group inline-block"
+            >
+                <div
+                    class="animate-fade-in-up mx-auto w-4/5 max-w-xs transition-transform duration-300 group-hover:scale-105 md:max-w-sm lg:max-w-md"
+                >
+                    <div
+                        class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl"
+                        data-aos="zoom-in"
+                        data-aos-delay="500"
+                    >
+                        <img
+                            src="{{ asset('storage/' . $visiMisi->image) }}"
+                            alt="Visi dan Misi Pondok"
+                            class="w-full object-cover"
+                        />
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
     <!-- Program Section -->
-    <section id="program" class="py-16 bg-gray-50">
+    <section id="Program" class="bg-gray-50 py-16">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
+            <div class="mb-12 text-center">
                 @php
                     $section = sectionHeader('program');
                 @endphp
 
-                <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                <h2
+                    class="title-section mb-4 text-3xl font-bold text-gray-800"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                    data-aos-duration="500"
+                >
                     {{ $section->title }}
                 </h2>
-                <p class="text-xl text-gray-600 mb-5">
+                <p class="mb-5 text-xl text-gray-600" data-aos="fade-down" data-aos-delay="200">
                     {{ $section->subtitle }}
                 </p>
-                <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+                <div class="mx-auto h-1 w-20 bg-blue-500"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($programs as $program)
-                    <div class="relative group rounded-xl overflow-hidden shadow-lg">
+                    <div
+                        class="group relative overflow-hidden rounded-xl shadow-lg"
+                        data-aos="flip-left"
+                        data-aos-delay="200"
+                        data-aos-duration="500"
+                    >
                         <img
                             src="{{ asset('storage/' . $program->image) }}"
                             alt="{{ $program->title }}"
-                            class="absolute inset-0 w-full h-full object-cover z-0 transition duration-500 group-hover:scale-105"
+                            class="absolute inset-0 z-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                         />
                         <div
-                            class="relative z-10 h-full bg-white bg-opacity-90 group-hover:bg-black/70 transition duration-500 flex flex-col justify-center items-center text-center p-6"
+                            class="relative z-10 flex h-full flex-col items-center justify-center bg-white bg-opacity-90 p-6 text-center transition duration-500 group-hover:bg-black/70"
                         >
                             <img
                                 src="{{ asset('storage/' . $program->icon) }}"
                                 alt=""
-                                class="h-16 mb-4"
+                                class="mb-4 h-16"
                             />
                             <h3
-                                class="text-xl font-semibold text-gray-800 group-hover:text-white mb-3"
+                                class="mb-3 text-xl font-semibold text-gray-800 group-hover:text-white"
                             >
                                 {{ $program->title }}
                             </h3>
-                            <p class="text-gray-600 group-hover:text-gray-200 text-sm">
+                            <p class="text-sm text-gray-600 group-hover:text-gray-200">
                                 {{ $program->description }}
                             </p>
                         </div>
@@ -234,131 +312,89 @@
     </section>
 
     <!-- Gallery Section -->
-    <section class="py-16 bg-white">
+    <section class="bg-white py-16">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">Galeri Kegiatan</h2>
-                <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1588072432836-1009b082c898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1588072432836-1009b082c898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-                <div class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition">
-                    <img
-                        src="https://images.unsplash.com/photo-1566669437685-c2c5d41c3b9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        alt="Kegiatan Ponpes"
-                        class="w-full h-48 object-cover hover:scale-105 transition duration-500"
-                    />
-                </div>
-            </div>
-
-            <div class="text-center mt-8">
-                <a
-                    href="#"
-                    class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md"
+            <div class="mb-12 text-center">
+                <h2
+                    class="title-section mb-4 text-3xl font-bold text-gray-800"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                    data-aos-duration="500"
                 >
-                    Lihat Lebih Banyak
-                </a>
+                    Galeri Kegiatan
+                </h2>
+                <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                @foreach ($galeriFoto as $foto)
+                    <div
+                        class="overflow-hidden rounded-lg shadow-md transition hover:shadow-xl"
+                        data-aos="zoom-out"
+                        data-aos-delay="200"
+                        data-aos-duration="500"
+                    >
+                        <a href="{{ Storage::url($foto->image) }}" data-lightbox="galeri">
+                            <img
+                                src="{{ Storage::url($foto->image) }}"
+                                alt="Galeri Foto"
+                                class="h-48 w-full object-cover transition duration-500 hover:scale-105"
+                            />
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section class="py-16 bg-gray-50">
+    <section class="bg-gray-50 py-16">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
+            <div class="mb-12 text-center">
                 @php
                     $section = sectionHeader('team');
                 @endphp
 
-                <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">
+                <h2 class="title-section mb-4 text-3xl font-bold text-gray-800">
                     {{ $section->title }}
                 </h2>
-                <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+                <div class="mx-auto h-1 w-20 bg-blue-500"></div>
             </div>
 
             <div
-                class="grid grid-cols-2 gap-8 justify-center md:flex md:flex-wrap md:justify-center"
+                class="grid grid-cols-2 justify-center gap-8 md:flex md:flex-wrap md:justify-center"
             >
                 @foreach ($teams as $team)
                     <div
-                        class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition w-full max-w-xs flex flex-col justify-between min-h-[300px]"
+                        class="flex min-h-[300px] w-full max-w-xs flex-col justify-between rounded-xl bg-white p-6 text-center shadow-md transition hover:shadow-lg"
                     >
                         <div>
                             <div
-                                class="w-32 h-32 mx-auto mb-4 overflow-hidden border-4 border-green-100"
+                                class="mx-auto mb-4 h-32 w-32 overflow-hidden border-4 border-green-100"
                             >
                                 <img
                                     src="{{ asset('storage/' . $team->photo) }}"
                                     alt="{{ $team->name }}"
-                                    class="w-full h-full object-cover"
+                                    class="h-full w-full object-cover"
                                 />
                             </div>
                             <h3
-                                class="text-base sm:text-lg md:text-xl font-semibold mb-1 truncate text-green-500"
+                                class="mb-1 truncate text-base font-semibold text-green-500 sm:text-lg md:text-xl"
                             >
                                 {{ $team->name }}
                             </h3>
-                            <p class="text-sm sm:text-base text-blue-600 mb-3 line-clamp-2">
+                            <p class="mb-3 line-clamp-2 text-sm text-blue-600 sm:text-base">
                                 {{ $team->position }}
                             </p>
                         </div>
                         <div
-                            class="flex justify-center space-x-3 mt-4 text-lg sm:text-xl md:text-2xl"
+                            class="mt-4 flex justify-center space-x-3 text-lg sm:text-xl md:text-2xl"
                         >
                             @if ($team->facebook)
                                 <a
                                     href="{{ $team->facebook }}"
                                     target="_blank"
-                                    class="text-gray-400 hover:text-green-600 transition"
+                                    class="text-gray-400 transition hover:text-green-600"
                                 >
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
@@ -368,7 +404,7 @@
                                 <a
                                     href="{{ $team->instagram }}"
                                     target="_blank"
-                                    class="text-gray-400 hover:text-green-600 transition"
+                                    class="text-gray-400 transition hover:text-green-600"
                                 >
                                     <i class="fab fa-instagram"></i>
                                 </a>
@@ -378,7 +414,7 @@
                                 <a
                                     href="{{ $team->twitter }}"
                                     target="_blank"
-                                    class="text-gray-400 hover:text-green-600 transition"
+                                    class="text-gray-400 transition hover:text-green-600"
                                 >
                                     <i class="fab fa-twitter"></i>
                                 </a>
@@ -391,18 +427,18 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="py-16 bg-green-600 text-white">
+    <section class="bg-green-600 py-16 text-white">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
                 <div>
-                    <div class="text-4xl font-bold mb-2" data-toggle="counter-up" data-count="2023">
+                    <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="2023">
                         0
                     </div>
                     <div class="text-lg">Tahun Berdiri</div>
                 </div>
                 <div>
                     <div
-                        class="text-4xl font-bold mb-2"
+                        class="mb-2 text-4xl font-bold"
                         data-toggle="counter-up"
                         data-count="{{ $totalSantri + 11 }}"
                     >
@@ -411,14 +447,14 @@
                     <div class="text-lg">Santri</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold mb-2" data-toggle="counter-up" data-count="8">
+                    <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="8">
                         0
                     </div>
                     <div class="text-lg">Pengajar</div>
                 </div>
                 <div>
                     <div
-                        class="text-4xl font-bold mb-2"
+                        class="mb-2 text-4xl font-bold"
                         data-toggle="counter-up"
                         data-count="{{ $totalLembaga }}"
                     >
@@ -431,11 +467,11 @@
     </section>
 
     <!-- Partner Institutions Section -->
-    <section id="lembaga" class="py-20 bg-gray-100 overflow-x-hidden">
+    <section id="lembaga" class="overflow-x-hidden bg-gray-100 py-20">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4 title-section">Partner Pondok</h2>
-                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+            <div class="mb-12 text-center">
+                <h2 class="title-section mb-4 text-3xl font-bold text-gray-800">Partner Pondok</h2>
+                <div class="mx-auto h-1 w-20 bg-green-500"></div>
             </div>
 
             <div class="relative px-4 sm:px-10 md:px-20">
@@ -443,15 +479,15 @@
                     <div class="swiper-wrapper">
                         @foreach ($lembagas as $lembaga)
                             <div
-                                class="swiper-slide py-12 flex flex-col items-center justify-center text-center transition-all duration-300"
+                                class="swiper-slide flex flex-col items-center justify-center py-12 text-center transition-all duration-300"
                             >
                                 <img
                                     src="{{ $lembaga->logo ? asset('storage/' . $lembaga->logo) : asset('images/default-logo.png') }}"
                                     alt="{{ $lembaga->nama_lembaga }}"
-                                    class="lembaga-logo object-contain h-24 w-auto mx-auto transition-all duration-300"
+                                    class="lembaga-logo mx-auto h-24 w-auto object-contain transition-all duration-300"
                                 />
                                 <h5
-                                    class="text-sm font-semibold text-gray-800 uppercase tracking-wide mt-2"
+                                    class="mt-2 text-sm font-semibold uppercase tracking-wide text-gray-800"
                                 >
                                     {{ $lembaga->nama_lembaga }}
                                 </h5>
@@ -465,20 +501,20 @@
     </section>
 
     <!-- News Section -->
-    <section class="py-16 bg-gray-50">
+    <section class="bg-gray py-16">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-10">
+            <div class="mb-10 text-center">
                 @php
                     $section = sectionHeader('blog');
                 @endphp
 
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">
+                <h2 class="mb-1 text-2xl title-section sm:text-3xl">
                     {{ $section->title }}
                 </h2>
-                <h3 class="text-base sm:text-xl font-semibold mb-4 text-gray-600">
+                <h3 class="mb-4 text-base font-semibold text-blue-500 sm:text-xl">
                     {{ $section->subtitle }}
                 </h3>
-                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+                <div class="mx-auto h-1 w-20 bg-green-500"></div>
             </div>
 
             @if ($blogs->count() > 0)
@@ -495,10 +531,10 @@
                     }
                 @endphp
 
-                <div class="grid {{ $gridCols }} gap-6 justify-center">
+                <div class="{{ $gridCols }} grid justify-center gap-6">
                     @foreach ($blogs as $blog)
                         <div
-                            class="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition duration-300 max-w-sm mx-auto"
+                            class="mx-auto max-w-sm overflow-hidden rounded-lg bg-white shadow transition duration-300 hover:shadow-md"
                         >
                             <!-- Desktop & Tablet -->
                             <div class="hidden sm:block">
@@ -506,22 +542,22 @@
                                     <img
                                         src="{{ asset('storage/' . $blog->image) }}"
                                         alt="Berita"
-                                        class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                        class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                                     />
                                 </div>
                                 <div class="p-4">
-                                    <div class="text-xs text-gray-500 mb-1">
+                                    <div class="mb-1 text-xs text-gray-500">
                                         {{ $blog->created_at->format('d M Y') }}
                                     </div>
-                                    <h3 class="text-sm font-semibold text-gray-800 mb-1">
+                                    <h3 class="mb-1 text-sm font-semibold text-gray-800">
                                         {{ $blog->title }}
                                     </h3>
-                                    <p class="text-sm text-gray-600 mb-2">
+                                    <p class="mb-2 text-sm text-gray-600">
                                         {{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 70, '...') }}
                                     </p>
                                     <a
                                         href="{{ $blog->instagram_link }}"
-                                        class="text-green-600 text-sm font-medium"
+                                        class="text-sm font-medium text-green-600"
                                     >
                                         Selengkapnya →
                                     </a>
@@ -529,11 +565,11 @@
                             </div>
 
                             <!-- Mobile -->
-                            <div class="sm:hidden flex gap-4 p-4">
+                            <div class="flex gap-4 p-4 sm:hidden">
                                 <img
                                     src="{{ asset('storage/' . $blog->image) }}"
                                     alt="Berita"
-                                    class="w-24 h-24 object-cover rounded-md flex-shrink-0"
+                                    class="h-24 w-24 flex-shrink-0 rounded-md object-cover"
                                 />
                                 <div class="flex flex-col justify-between">
                                     <div class="text-xs text-gray-500">
@@ -547,7 +583,7 @@
                                     </p>
                                     <a
                                         href="{{ $blog->instagram_link }}"
-                                        class="text-green-600 text-xs font-medium"
+                                        class="text-xs font-medium text-green-600"
                                     >
                                         Selengkapnya →
                                     </a>
@@ -558,10 +594,10 @@
                 </div>
             @endif
 
-            <div class="text-center mt-10">
+            <div class="mt-10 text-center">
                 <a
                     href="#"
-                    class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md"
+                    class="inline-block rounded-full bg-green-600 px-6 py-3 font-medium text-white shadow-md transition hover:bg-green-700"
                 >
                     Lihat Semua Berita
                 </a>
@@ -569,234 +605,82 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Testimoni</h2>
-                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="Testimoni"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Bapak Andi</h4>
-                            <p class="text-gray-500 text-sm">Orang Tua Santri</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">
-                        "Ponpes Selfa telah membantu anak saya menjadi lebih disiplin dan mandiri.
-                        Prestasi akademiknya juga meningkat signifikan."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <div class="testimonial-card p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
-                            <img
-                                src="https://randomuser.me/api/portraits/women/45.jpg"
-                                alt="Testimoni"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Ibu Siti</h4>
-                            <p class="text-gray-500 text-sm">Orang Tua Santri</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">
-                        "Sangat puas dengan pendidikan agama yang diberikan. Anak saya sekarang
-                        sudah hafal 3 juz dan rajin shalat berjamaah."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <div class="testimonial-card p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/75.jpg"
-                                alt="Testimoni"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Bapak Budi</h4>
-                            <p class="text-gray-500 text-sm">Alumni</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">
-                        "Pendidikan di Ponpes Selfa sangat berkesan. Saya sekarang bisa kuliah di
-                        luar negeri berkat beasiswa dari hafalan Qur'an yang diajarkan di sini."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50">
+    <section id="contact" class="bg-gray-50 py-16">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Hubungi Kami</h2>
-                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+            <div class="mb-12 text-center">
+                @php
+                    $section = sectionHeader('contact');
+                @endphp
+
+                <h2 class="mb-4 text-3xl font-bold text-gray-800">{{ $section->title }}</h2>
+                <div class="mx-auto h-1 w-20 bg-green-500"></div>
             </div>
 
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h3 class="text-xl font-semibold mb-4">Informasi Kontak</h3>
+            <div class="flex flex-col gap-6 md:flex-row md:items-stretch">
+                <!-- Kolom Kiri: Hubungi Kami -->
+                <div class="md:w-1/2">
+                    <div class="h-full rounded-xl bg-white p-6 shadow-md">
+                        <h3 class="mb-4 text-xl font-semibold">{{ $section->subtitle }}</h3>
 
-                        <div class="flex items-start mb-4">
-                            <div class="text-green-600 mr-4 mt-1">
+                        <!-- Alamat -->
+                        <div class="mb-4 flex items-start">
+                            <div class="mr-4 mt-1 text-green-600">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium">Alamat</h4>
-                                <p class="text-gray-600">
-                                    Jl. Pendidikan No. 123, Kec. Ciputat, Kota Tangerang Selatan,
-                                    Banten 15411
-                                </p>
+                                <p class="text-gray-600">{!! nl2br(e($alamat)) !!}</p>
                             </div>
                         </div>
 
-                        <div class="flex items-start mb-4">
-                            <div class="text-green-600 mr-4 mt-1">
+                        <!-- Telepon -->
+                        <div class="mb-4 flex items-start">
+                            <div class="mr-4 mt-1 text-green-600">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium">Telepon</h4>
-                                <p class="text-gray-600">(021) 12345678</p>
-                                <p class="text-gray-600">0812-3456-7890 (WhatsApp)</p>
+                                <p class="text-gray-600">{!! nl2br(e($telepon)) !!}</p>
                             </div>
                         </div>
 
-                        <div class="flex items-start mb-4">
-                            <div class="text-green-600 mr-4 mt-1">
+                        <!-- Email -->
+                        <div class="mb-4 flex items-start">
+                            <div class="mr-4 mt-1 text-green-600">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium">Email</h4>
-                                <p class="text-gray-600">info@ponpesselfa.sch.id</p>
+                                <p class="text-gray-600">{{ $email }}</p>
                             </div>
                         </div>
 
+                        <!-- Jam Operasional -->
                         <div class="flex items-start">
-                            <div class="text-green-600 mr-4 mt-1">
+                            <div class="mr-4 mt-1 text-green-600">
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium">Jam Operasional</h4>
-                                <p class="text-gray-600">Senin - Jumat: 08.00 - 16.00 WIB</p>
-                                <p class="text-gray-600">Sabtu: 08.00 - 12.00 WIB</p>
+                                <p class="text-gray-600">{!! nl2br(e($jam)) !!}</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 bg-white p-6 rounded-xl shadow-md">
-                        <h3 class="text-xl font-semibold mb-4">Lokasi Kami</h3>
-                        <div class="aspect-w-16 aspect-h-9">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.317239755586!2d106.8225093147693!3d-6.352966295404291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec6b07b68ea5%3A0x17da46bdf9308386!2sTangerang%20Selatan%2C%20South%20Tangerang%20City%2C%20Banten!5e0!3m2!1sen!2sid!4v1625555555555!5m2!1sen!2sid"
-                                width="100%"
-                                height="300"
-                                style="border: 0"
-                                allowfullscreen=""
-                                loading="lazy"
-                                class="rounded-lg"
-                            ></iframe>
                         </div>
                     </div>
                 </div>
 
+                <!-- Kolom Kanan: Google Maps -->
                 <div class="md:w-1/2">
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h3 class="text-xl font-semibold mb-4">Kirim Pesan</h3>
-                        <form>
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 mb-2">
-                                    Nama Lengkap
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 mb-2">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="phone" class="block text-gray-700 mb-2">
-                                    Nomor Telepon
-                                </label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="subject" class="block text-gray-700 mb-2">Subjek</label>
-                                <input
-                                    type="text"
-                                    id="subject"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="message" class="block text-gray-700 mb-2">Pesan</label>
-                                <textarea
-                                    id="message"
-                                    rows="4"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                ></textarea>
-                            </div>
-
-                            <button
-                                type="submit"
-                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-medium transition shadow-md w-full"
-                            >
-                                Kirim Pesan
-                            </button>
-                        </form>
+                    <div class="h-full rounded-xl bg-white p-6 shadow-md">
+                        <h3 class="mb-4 text-xl font-semibold">Lokasi Kami</h3>
+                        <div class="relative h-0 w-full overflow-hidden rounded-lg pb-[56%]">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1222.7013959293104!2d110.60411067090085!3d-7.692333357861694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a43f01ae7ca55%3A0x3052ee63172a145f!2sMasjid%20Al-Muhajirin!5e0!3m2!1sid!2sid!4v1743005025922!5m2!1sid!2sid"
+                                class="absolute left-0 top-0 h-full w-full border-0"
+                                allowfullscreen=""
+                                loading="lazy"
+                            ></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -804,16 +688,16 @@
     </section>
 
     <!-- Register Section -->
-    <section id="daftar" class="py-16 bg-green-600 text-white">
+    <section id="daftar" class="bg-green-600 py-16 text-white">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6">Daftarkan Putra/Putri Anda Sekarang</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">
-                Bergabunglah dengan Ponpes Selfa untuk pendidikan terbaik yang mengintegrasikan ilmu
-                agama dan umum dengan metode pembelajaran modern.
+            <h2 class="mb-6 text-3xl font-bold">Daftarkan Putra/Putri Anda Sekarang</h2>
+            <p class="mx-auto mb-8 max-w-2xl text-xl">
+                Bergabunglah dengan Ponpes Selfa, Bersama Ponpes Selfa, kami membina jiwa berilmu
+                dan beramal, untuk Islam dan kemaslahatan masyarakat..
             </p>
             <a
-                href="#"
-                class="inline-block bg-white text-green-600 hover:bg-gray-100 px-8 py-4 rounded-full font-bold text-lg transition shadow-lg"
+                href="pendaftaran"
+                class="inline-block rounded-full bg-white px-8 py-4 text-lg font-bold text-green-600 shadow-lg transition hover:bg-gray-100"
             >
                 Daftar Sekarang
             </a>
@@ -821,56 +705,56 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
+    <footer class="bg-gray-800 pb-6 pt-12 text-white">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Ponpes Selfa</h3>
-                    <p class="text-gray-400 mb-4">
+                    <h3 class="mb-4 text-xl font-bold">Ponpes Selfa</h3>
+                    <p class="mb-4 text-gray-400">
                         Pondok Pesantren Modern Selfa, membentuk generasi Qur'ani yang berakhlak
                         mulia, berwawasan luas, dan mandiri.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 transition hover:text-white">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 transition hover:text-white">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 transition hover:text-white">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
+                        <a href="#" class="text-gray-400 transition hover:text-white">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Info Pondok</h3>
+                    <h3 class="mb-4 text-lg font-semibold">Info Pondok</h3>
                     <ul class="space-y-2">
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Sejarah
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Visi & Misi
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Struktur Organisasi
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Fasilitas
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Prestasi
                             </a>
                         </li>
@@ -878,57 +762,55 @@
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Informasi</h3>
+                    <h3 class="mb-4 text-lg font-semibold">Informasi</h3>
                     <ul class="space-y-2">
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Pendaftaran
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
-                                Biaya Pendidikan
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Kalender Akademik
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">
+                            <a href="#" class="text-gray-400 transition hover:text-white">
                                 Beasiswa
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-gray-400 hover:text-white transition">FAQ</a>
+                            <a href="#" class="text-gray-400 transition hover:text-white">FAQ</a>
                         </li>
                     </ul>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Kontak Kami</h3>
+                    <h3 class="mb-4 text-lg font-semibold">Kontak Kami</h3>
                     <ul class="space-y-2">
                         <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-gray-400"></i>
+                            <i class="fas fa-map-marker-alt mr-2 mt-1 text-gray-400"></i>
                             <span class="text-gray-400">
-                                Jl. Pendidikan No. 123, Ciputat, Tangerang Selatan
+                                Jl. Wahidin Sudiro Husodo No.36, Bramen, Sekarsuli, Kec. Klaten
+                                Utara, Kabupaten Klaten, Jawa Tengah 57438
                             </span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-phone-alt mr-2 text-gray-400"></i>
-                            <span class="text-gray-400">(021) 12345678</span>
+                            <span class="text-gray-400">
+                                <a href="https://wa.me/6285217176495">Ustad Furqan (Mudir)</a>
+                            </span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-envelope mr-2 text-gray-400"></i>
-                            <span class="text-gray-400">info@ponpesselfa.sch.id</span>
+                            <span class="text-gray-400">ponpes.sayfelfalah@gmail.com</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-gray-700 pt-6 text-center text-gray-400">
-                <p>&copy; 2023 Ponpes Selfa. All rights reserved.</p>
+                <p>&copy; 2025 Ponpes Selfa, By Raihan Hamdani</p>
             </div>
         </div>
     </footer>

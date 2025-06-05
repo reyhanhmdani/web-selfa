@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asatid;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
 class DokumentsasiSantriController extends Controller
 {
-    public function dokumentId($id)
+    public function dokumentId($tipe, $id)
     {
-        $santri = Student::findOrFail($id);
-        $files = is_array($santri->images) ? $santri->images : json_decode($santri->images, true);
-        return view('pages.dokumentasi', compact('santri', 'files'));
+        if ($tipe === 'santri') {
+            $person = Student::findOrFail($id);
+        } elseif ($tipe === 'asatid') {
+            $person = Asatid::findOrFail($id);
+        } else {
+            abort(404);
+        }
+
+        $files = is_array($person->images) ? $person->images : json_decode($person->images, true);
+
+        return view('pages.dokumentasi', [
+            'person' => $person,
+            'files' => $files,
+            'tipe' => $tipe
+        ]);
     }
 }

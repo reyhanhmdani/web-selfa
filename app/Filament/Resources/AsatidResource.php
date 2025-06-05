@@ -2,40 +2,37 @@
 
 namespace App\Filament\Resources;
 
-use stdClass;
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Student;
+use App\Models\Asatid;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Doctrine\DBAL\Schema\Column;
 use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\Pages\EditStudent;
-use App\Filament\Resources\StudentResource\Pages\ListStudents;
-use App\Filament\Resources\StudentResource\Pages\CreateStudent;
+use App\Filament\Resources\AsatidResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\AsatidResource\RelationManagers;
+use App\Filament\Resources\AsatidResource\Pages\ManageAsatids;
 
-class StudentResource extends Resource
+class AsatidResource extends Resource
 {
-    protected static ?string $model = Student::class;
+    protected static ?string $model = Asatid::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
-    // ⬇ Tambahkan navigation group
     protected static ?string $navigationGroup = 'Database SELFA';
-    protected static ?string $navigationLabel = 'Para Santri';
+    protected static ?string $navigationLabel = 'Para Asatid';
 
     protected static ?string $pluralLabel = 'Santri';
 
@@ -44,16 +41,15 @@ class StudentResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label('Nama Santri')
+                    ->label('Nama Ustad')
                     ->required()
                     ->maxLength(255),
 
                 Select::make('status')
                     ->label('Status')
                     ->options([
-                        'calon' => 'Calon Santri',
-                        'santri' => 'Santri',
-                        'alumni' => 'Alumni',
+                        'calon' => 'Calon Ustad/Ustadzah',
+                        'asatid' => 'Ustad/Ustadzah',
                         'nonaktif' => 'Nonaktif',
                     ])
                     ->default('calon')
@@ -89,19 +85,6 @@ class StudentResource extends Resource
                     ->numeric()
                     ->rules(['min:1', 'max:30']),
 
-                Select::make('angkatan')
-                    ->label('Angkatan')
-                    ->options([
-                        1 => 'Angkatan 1',
-                        2 => 'Angkatan 2',
-                        3 => 'Angkatan 3',
-                        4 => 'Angkatan 4',
-                        5 => 'Angkatan 5',
-                        6 => 'Angkatan 6',
-                        7 => 'Angkatan 7',
-                    ])
-                    ->required(),
-
                 FileUpload::make('images')
                     ->label('Dokumen Santri')
                     ->multiple() // Mengizinkan banyak file
@@ -113,7 +96,6 @@ class StudentResource extends Resource
                     ->openable(),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {
@@ -187,7 +169,7 @@ class StudentResource extends Resource
                     })
                     ->icon('heroicon-o-document')
                     ->color('primary')
-                    ->url(fn($record) => route('documents', ['tipe' => 'santri', 'id' => $record->id]), true)
+                    ->url(fn($record) => route('documents', ['tipe' => 'asatid', 'id' => $record->id]), true)
                     ->openUrlInNewTab(),
             ])
             ->filters([
@@ -224,19 +206,10 @@ class StudentResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStudents::route('/'),
-            'create' => Pages\CreateStudent::route('/create'),
-            'edit' => Pages\EditStudent::route('/{record}/edit'),
+            'index' => Pages\ManageAsatids::route('/'),
         ];
     }
 }
