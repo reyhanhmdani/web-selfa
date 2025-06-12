@@ -2,23 +2,23 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
-use App\Models\Student;
-use App\Models\GaleriFoto;
+use Filament\Pages\Dashboard as BaseDashboard;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
+// Jika Anda punya widget lain, impor juga di sini
+// use App\Filament\Resources\ProductResource\Widgets\ProductStatsOverview;
 
-class Dashboard extends Page
+class Dashboard extends BaseDashboard
 {
-
-    protected static ?string $navigationIcon = 'heroicon-o-home';
-    protected static string $view = 'filament.pages.dashboard';
-
-    public function getSantriCount(): int
+    /**
+     * Ubah 'protected' menjadi 'public' di sini.
+     */
+    public function getWidgets(): array
     {
-        return Student::count();
-    }
-
-    public function getFotoCount(): int
-    {
-        return GaleriFoto::count();
+        return [
+            AccountWidget::class,
+            FilamentInfoWidget::class,
+            // ProductStatsOverview::class, // Aktifkan jika Anda punya widget kustom
+        ];
     }
 }
