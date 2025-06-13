@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use App\Models\Program;
 use Filament\Forms\Form;
@@ -34,7 +35,18 @@ class ProgramResource extends Resource
                 TextInput::make('title')
                     ->label('Judul Program')
                     ->required(),
-
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 Textarea::make('description')
                     ->label('Deskripsi Program')
                     ->required(),
@@ -81,6 +93,18 @@ class ProgramResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('icon')->label('Icon')->width(50),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('title')->label('Judul')->searchable(),
                 TextColumn::make('description')->label('Deskripsi')->searchable()->formatStateUsing(fn($state) => Str::limit($state, 10)),
                 TextColumn::make('order')->label('Urutan')->sortable(),

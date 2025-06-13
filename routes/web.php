@@ -23,6 +23,9 @@ Route::get('/santri/export/excel', [SantriExportControler::class, 'exportExcel']
 
 Route::get('/', [LandingController::class, 'index']);
 
+// Route::get('/ponpes', [LandingController::class, 'index']);
+
+
 // Pendaftaran
 Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.form');
 Route::post('/pendaftaran', [PendaftaranController::class, 'submit'])->name('pendaftaran.submit');

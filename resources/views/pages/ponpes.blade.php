@@ -1,78 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<nav class="floating-nav floating-nav-mobile md:floating-nav">
-    <div class="hidden items-center md:flex">
-        @if ($navbar && $navbar->logo)
-        <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-10" />
-        @endif
-
-        <a href="#" class="text-2xl font-bold text-green-600">
-            {{ $navbar->title ?? 'Ponpes Selfa' }}
-        </a>
-    </div>
-
-    <div class="flex items-center space-x-1 md:space-x-4">
-        @if ($navbar && is_array($navbar->navigation))
-        @foreach ($navbar->navigation as $nav)
-        @if (($nav['type'] ?? '') === 'dropdown' && isset($nav['children']))
-        <div class="dropdown relative">
-            <button
-                class="flex items-center rounded-full p-2 text-gray-700 transition hover:bg-green-50 hover:text-green-600 md:px-4">
-                @if (! empty($nav['icon']))
-                <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
-                @endif
-
-                <span class="ml-2 hidden md:inline">
-                    {{ $nav['label'] }}
-                </span>
-                <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
-            </button>
-            <div class="dropdown-menu absolute hidden transition-all duration-300">
-                @foreach ($nav['children'] as $child)
-                <a href="{{ $child['url'] }}"
-                    class="{{ ($child['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} block px-4 py-2 text-gray-700 transition hover:bg-green-50"
-                    {{ ($child['type'] ?? '' )==='external' ? 'target=_blank' : '' }}>
-                    @if (! empty($child['icon']))
-                    <i class="fa-solid fa-{{ $child['icon'] }} mr-2"></i>
-                    @endif
-
-                    {{ $child['label'] }}
-                </a>
-                @endforeach
-            </div>
-        </div>
-        @elseif ($nav['button'] ?? false)
-        {{-- Tombol Daftar ditampilkan di luar navbar-nav --}}
-        @else
-        <a href="{{ $nav['url'] }}"
-            class="{{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} {{ request()->is(trim($nav['url'], '/')) ? 'font-semibold text-green-600' : '' }} rounded-full p-2 text-gray-700 transition hover:bg-green-50 hover:text-green-600 md:px-4"
-            {{ ($nav['type'] ?? '' )==='external' ? 'target=_blank' : '' }}>
-            @if (! empty($nav['icon']))
-            <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
-            @endif
-
-            <span class="ml-2 hidden md:inline">
-                {{ $nav['label'] }}
-            </span>
-        </a>
-        @endif
-        @endforeach
-        @endif
-    </div>
-
-    @if ($navbar && is_array($navbar->navigation))
-    @foreach ($navbar->navigation as $nav)
-    @if ($nav['button'] ?? false)
-    <a href="{{ $nav['url'] }}"
-        class="{{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} rounded-full bg-green-600 px-4 py-2 text-white shadow-md transition hover:bg-green-700"
-        {{ ($nav['type'] ?? '' )==='external' ? 'target=_blank' : '' }}>
-        {{ $nav['label'] }}
-    </a>
-    @endif
-    @endforeach
-    @endif
-</nav>
 
 <!-- Floating Register Button -->
 <div class="floating-container right-5 top-5 md:bottom-5 md:right-5 md:top-auto">
@@ -277,7 +205,8 @@
             $section = sectionHeader('team');
             @endphp
 
-            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800">
+            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800" data-aos="fade-up" data-aos-delay="200"
+                data-aos-duration="500">
                 {{ $section->title }}
             </h2>
             <div class="mx-auto h-1 w-20 bg-blue-500"></div>
@@ -288,7 +217,7 @@
             <div
                 class="flex min-h-[300px] w-full max-w-xs flex-col justify-between rounded-xl bg-white p-6 text-center shadow-md transition hover:shadow-lg">
                 <div>
-                    <div class="mx-auto mb-4 h-32 w-32 overflow-hidden border-4 border-green-100">
+                    <div class="mx-auto mb-4 h-32 w-32 overflow-hidden border-4 rounded-full">
                         <img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}"
                             class="h-full w-full object-cover" />
                     </div>
@@ -363,8 +292,9 @@
 <section id="lembaga" class="overflow-x-hidden bg-gray-100 py-20">
     <div class="container mx-auto px-4">
         <div class="mb-12 text-center">
-            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800">Partner Pondok</h2>
-            <div class="mx-auto h-1 w-20 bg-green-500"></div>
+            <h2 class="title-section mb-4 text-3xl font-bold" data-aos="fade-up" data-aos-delay="200"
+                data-aos-duration="500">Partner Pondok</h2>
+            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
         </div>
 
         <div class="relative px-4 sm:px-10 md:px-20">
@@ -396,10 +326,12 @@
             $section = sectionHeader('blog');
             @endphp
 
-            <h2 class="mb-1 text-2xl title-section sm:text-3xl">
+            <h2 class="mb-1 text-2xl title-section sm:text-3xl" data-aos="fade-up" data-aos-delay="200"
+                data-aos-duration="500">
                 {{ $section->title }}
             </h2>
-            <h3 class="mb-4 text-base font-semibold text-blue-500 sm:text-xl">
+            <h3 class="mb-4 text-base font-semibold text-blue-500 sm:text-xl" data-aos="fade-down" data-aos-delay="200"
+                data-aos-duration="500">
                 {{ $section->subtitle }}
             </h3>
             <div class="mx-auto h-1 w-20 bg-green-500"></div>
@@ -486,8 +418,9 @@
             $section = sectionHeader('contact');
             @endphp
 
-            <h2 class="mb-4 text-3xl font-bold text-gray-800">{{ $section->title }}</h2>
-            <div class="mx-auto h-1 w-20 bg-green-500"></div>
+            <h2 class="mb-4 title-section" data-aos="fade-up" data-aos-delay="200" data-aos-duration="500">{{
+                $section->title }}</h2>
+            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
         </div>
 
         <div class="flex flex-col gap-6 md:flex-row md:items-stretch">
@@ -573,114 +506,13 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-gray-800 pb-6 pt-12 text-white">
-    <div class="container mx-auto px-4">
-        <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-                <h3 class="mb-4 text-xl font-bold">Ponpes Selfa</h3>
-                <p class="mb-4 text-gray-400">
-                    Pondok Pesantren Modern Selfa, membentuk generasi Qur'ani yang berakhlak
-                    mulia, berwawasan luas, dan mandiri.
-                </p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 transition hover:text-white">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 transition hover:text-white">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 transition hover:text-white">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 transition hover:text-white">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="mb-4 text-lg font-semibold">Info Pondok</h3>
-                <ul class="space-y-2">
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Sejarah
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Visi & Misi
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Struktur Organisasi
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Fasilitas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Prestasi
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="mb-4 text-lg font-semibold">Informasi</h3>
-                <ul class="space-y-2">
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Pendaftaran
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Kalender Akademik
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">
-                            Beasiswa
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition hover:text-white">FAQ</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="mb-4 text-lg font-semibold">Kontak Kami</h3>
-                <ul class="space-y-2">
-                    <li class="flex items-start">
-                        <i class="fas fa-map-marker-alt mr-2 mt-1 text-gray-400"></i>
-                        <span class="text-gray-400">
-                            Jl. Wahidin Sudiro Husodo No.36, Bramen, Sekarsuli, Kec. Klaten
-                            Utara, Kabupaten Klaten, Jawa Tengah 57438
-                        </span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-phone-alt mr-2 text-gray-400"></i>
-                        <span class="text-gray-400">
-                            <a href="https://wa.me/6285217176495">Ustad Furqan (Mudir)</a>
-                        </span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-envelope mr-2 text-gray-400"></i>
-                        <span class="text-gray-400">ponpes.sayfelfalah@gmail.com</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="border-t border-gray-700 pt-6 text-center text-gray-400">
-            <p>&copy; 2025 Ponpes Selfa, By Raihan Hamdani</p>
-        </div>
-    </div>
-</footer>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init()
+</script>
+@endpush

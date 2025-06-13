@@ -3,9 +3,11 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use App\Models\VisiMisi;
 use Filament\Forms\Form;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Storage;
@@ -43,6 +45,18 @@ class VisiMisiResource extends Resource
                         return time() . '-' . $file->getClientOriginalName();
                     })
                     ->required(),
+                    Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(), // Agar field ini mengambil lebar penuh
 
             ]);
     }
@@ -51,10 +65,31 @@ class VisiMisiResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('image'),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable()
+                    ->sortable(),
             ])
+            // ... (filters, actions, bulkActions)
             ->filters([
-                //
+                // Opsional: Tambahkan filter untuk status_page
+                Tables\Filters\SelectFilter::make('status_page')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->label('Filter Halaman Tampil'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

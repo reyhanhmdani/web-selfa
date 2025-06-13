@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -29,7 +30,18 @@ class SectionHeaderResource extends Resource
                     ->label('Kunci Section (ex: program, galeri)')
                     ->required()
                     ->unique(ignorable: fn($record) => $record),
-
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 TextInput::make('title')
                     ->label('Judul Section')
                     ->required(),
@@ -49,6 +61,19 @@ class SectionHeaderResource extends Resource
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable()
+                    ->sortable(),
+                    
                 TextColumn::make('title')
                     ->label('Judul Section')
                     ->searchable()

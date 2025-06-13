@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\Pendidikan;
@@ -37,6 +38,18 @@ class PendidikanResource extends Resource
                     ->label('Judul')
                     ->required()
                     ->maxLength(255),
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 Textarea::make('description')
                     ->label('Deskripsi')
                     ->required()

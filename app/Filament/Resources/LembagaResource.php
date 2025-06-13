@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use App\Models\Lembaga;
 use Filament\Forms\Form;
@@ -36,7 +37,18 @@ class LembagaResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
-
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 FileUpload::make('logo')
                     ->label('Logo Lembaga')
                     ->image()
@@ -63,7 +75,18 @@ class LembagaResource extends Resource
                 ImageColumn::make('logo')
                     ->label('Logo'),
                 // ->circular(),
-
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable() // Memungkinkan pencarian berdasarkan status
+                    ->sortable(),
                 TextColumn::make('nama_lembaga')
                     ->label('Nama Lembaga')
                     ->searchable()

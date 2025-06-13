@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use App\Models\About;
 use Filament\Forms\Form;
@@ -38,6 +39,18 @@ class AboutResource extends Resource
                     ->required()
                     ->maxLength(255),
 
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 TextInput::make('sub_title')
                     ->label('Sub Judul Section')
                     ->required()
@@ -88,6 +101,18 @@ class AboutResource extends Resource
             ->columns([
                 TextColumn::make('title_section')
                     ->label('Judul Section'),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable() // Memungkinkan pencarian berdasarkan status
+                    ->sortable(), // Memungkinkan pe
                 TextColumn::make('sub_title')
                     ->label('Sub Judul Section'),
                 TextColumn::make('description')

@@ -44,7 +44,18 @@ class ContactInfoResource extends Resource
                     'facebook' => 'Facebook',
                 ])
                 ->required(),
-
+             Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
             Textarea::make('value')
                 ->label('Isi')
                 ->rows(5)
@@ -56,6 +67,18 @@ class ContactInfoResource extends Resource
     {
         return $table->columns([
             TextColumn::make('key')->label('Tipe')->searchable(),
+            TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable() // Memungkinkan pencarian berdasarkan status
+                    ->sortable(), // Abu-abu untuk nilai tak dikenal
             TextColumn::make('value')->label('Isi')->limit(40),
         ])
             ->defaultSort('key')

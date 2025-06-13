@@ -5,9 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\NavbarResource\Pages;
 use App\Models\Navbar;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class NavbarResource extends Resource
@@ -27,6 +30,18 @@ class NavbarResource extends Resource
                     ->directory('navbars')
                     ->nullable()
                     ->label('Logo'),
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
@@ -95,15 +110,31 @@ class NavbarResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('logo')->label('Logo'),
-                Tables\Columns\TextColumn::make('title')->label('Judul Website'),
-                Tables\Columns\TextColumn::make('navigation')
-                    ->formatStateUsing(fn($state) => json_encode($state, JSON_PRETTY_PRINT))
-                    ->label('Navigasi')
-                    ->wrap(),
+                ImageColumn::make('logo')->label('Logo'),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable()
+                    ->sortable(),
             ])
+            // ... (filters, actions, bulkActions)
             ->filters([
-                //
+                // Opsional: Tambahkan filter untuk status_page
+                Tables\Filters\SelectFilter::make('status_page')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->label('Filter Halaman Tampil'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

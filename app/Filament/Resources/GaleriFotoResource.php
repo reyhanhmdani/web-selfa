@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\GaleriFoto;
@@ -31,6 +32,18 @@ class GaleriFotoResource extends Resource
                     ->image()
                     ->directory('galeri-foto')
                     ->required(),
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(),
 
                 TextInput::make('order')
                     ->label('Urutan')
@@ -45,6 +58,18 @@ class GaleriFotoResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image')->label('Foto')->square(),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable() // Memungkinkan pencarian berdasarkan status
+                    ->sortable(),
                 TextColumn::make('order')->label('Urutan')->sortable(),
             ])
             ->defaultSort('order', 'asc')

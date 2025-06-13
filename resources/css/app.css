@@ -61,6 +61,7 @@
     color: var(--secondary);
 }
 
+/* navbar */
 .floating-nav {
     position: fixed;
     bottom: 2rem;
@@ -107,6 +108,13 @@
 .dropdown-menu {
     top: 100%;
     left: 0;
+}
+@media (max-width: 767px) {
+    .dropdown-menu {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 0.5rem;
+    }
 }
 
 .swiper-slide {
@@ -159,10 +167,4 @@
     }
 }
 
-@media (max-width: 767px) {
-    .dropdown-menu {
-        top: auto;
-        bottom: 100%;
-        margin-bottom: 0.5rem;
-    }
-}
+

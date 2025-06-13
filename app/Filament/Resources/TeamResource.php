@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Team;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -31,6 +32,18 @@ class TeamResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required()->label('Nama'),
+                Select::make('status_page')
+                    ->label('Tampilkan di Halaman')
+                    ->options([
+                        'utama' => 'Halaman Utama',
+                        'ponpes' => 'Halaman Ponpes',
+                        'sd' => 'Halaman SD',
+                        'tk&kb' => 'Halaman TK & KB',
+                    ])
+                    ->default('utama') // Nilai default
+                    ->required() // Opsional, tergantung apakah status page harus selalu diisi
+                    ->native(false) // Membuat dropdown lebih stylis di Filament
+                    ->columnSpanFull(), // Agar field ini mengambil lebar penuh
                 TextInput::make('position')->required()->label('Posisi'),
                 FileUpload::make('photo')->image()->directory('teams')->required()->label('Foto')
                     ->deleteUploadedFileUsing(function ($record) {
@@ -53,6 +66,18 @@ class TeamResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('photo')->label('Foto')->width(50),
+                TextColumn::make('status_page')
+                    ->label('Tampil di')
+                    ->badge() // Menampilkan sebagai badge (lebih visual)
+                    ->color(fn (string $state): string => match ($state) {
+                        'utama' => 'success', // Hijau
+                        'ponpes' => 'info',    // Biru
+                        'sd' => 'warning',   // Kuning
+                        'tk&kb' => 'danger',  // Merah
+                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                    })
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')->label('Nama')->searchable(),
                 TextColumn::make('position')->label('Jabatan'),
 
