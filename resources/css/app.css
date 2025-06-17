@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #00ab66;
+    --yellow:#fed101;
+    --light:#f8f8f8;
+    --secondary:#0f489a;
+    --thirdy: #00c2ff;
+    --green: #c2ce3b;
+
+    --hover--primary: #00ab2535;
+}
+
+.page-home {
+    --primary: #0f499b; /* Di-overr ide menjadi nilai --secondary global (Biru) */
+    --secondary: #00ab66; /* Di-override menjadi nilai --primary global (Hijau) */
+
+     --hover--primary: #0f499b3a;
+}
+
+/* Tema untuk halaman Ponpes (dan default) */
+.page-ponpes,
+.page-default {
+    /* Atur semua variabel tema untuk halaman ini di sini */
+    --nav-shadow-color: rgba(0, 171, 102, 0.5); /* <-- Warna shadow navbar: hijau */
+}
+
+/* Tema untuk halaman Home */
+.page-home {
+    /* Atur semua variabel tema untuk halaman ini di sini */
+    --nav-shadow-color: var(--thirdy); /* <-- Warna shadow navbar: biru */
+}
+/* tombol melayang */
+/* Custom CSS for the bounce animation */
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+.fa-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* Smaller floating button */
+.floating-container {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+/* Make sure the link covers the entire button area */
+.floating-content {
+    display: block;
+    text-decoration: none;
+}
+
+/* font */
+
+/* title section color */
+.title-section {
+    color: var(--primary); /* Gunakan variabel, fallback ke hijau */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+/* sub title section color */
+.sub-title-section {
+    color: var(--yellow);
+}
+/* navbar */
+.navbar-title {
+    color: var(--primary); /* Gunakan variabel, fallback ke hijau */
+}
+
+.nav-item {
+    color: #4B5563; /* Default: text-gray-600 */
+    transition-property: color, background-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
+}
+.nav-item:hover {
+    color: var(--primary); /* Teks menjadi warna tema saat di-hover */
+
+    /* Trik untuk background: gunakan warna tema dengan opacity rendah */
+    background-color: var(--hover--primary);
+    --tw-bg-opacity: 0.1;
+}
+
+/* Styling untuk link yang sedang aktif */
+.nav-item.active {
+    color: var(--primary);
+    font-weight: 600; /* semibold */
+    background-color: var(--primary);
+    --tw-bg-opacity: 0.1;
+}
+
+
+.floating-nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    box-shadow: 0 4px 6px -1px var(--nav-shadow-color);
+    z-index: 999;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.floating-nav-mobile {
+    width: 90%;
+    justify-content: space-around;
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    top: 100%; /* posisi default desktop */
+    left: 0;
+}
+
+/* Styling untuk item di dalam menu dropdown */
+.dropdown-item {
+    color: #374151; /* Default: text-gray-700 */
+    transition: background-color 200ms ease-in-out;
+}
+
+.dropdown-item:hover {
+    /* Hanya ubah background agar teks tetap terbaca */
+    background-color: var(--primary);
+    --tw-bg-opacity: 0.1;
+}
+
+/* Saat dibuka */
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* Default posisi: ke bawah */
+.dropdown-menu {
+    top: 100%;
+    left: 0;
+}
+
+@media (min-width: 768px) {
+    .floating-nav {
+        bottom: auto;
+        top: 1rem;
+        left: 3rem;
+        right: 3rem;
+        transform: none;
+        width: auto;
+        justify-content: space-between;
+        padding: 0.75rem 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .dropdown-menu {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.swiper-slide {
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+    opacity: 0.5;
+}
+
+/* Program */
+.group-hover\:scale-105 {
+    transform: scale(1.05);
+}
