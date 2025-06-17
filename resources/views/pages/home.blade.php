@@ -289,15 +289,8 @@
 </section>
 
 <!-- Partner Institutions Section -->
-<section id="partner" class="bg-gray-100 dark:bg-gray-50 py-20">
+<section id="partner" class="py-20">
     <div class="container mx-auto px-4">
-        {{-- Judul Seksi --}}
-        <div class="mb-16 text-center">
-            <h2 class="title-section mb-4 text-3xl font-bold" data-aos="fade-up">
-                Partner Pondok
-            </h2>
-            <div class="mx-auto h-1 w-24 bg-blue-500" data-aos="fade-up" data-aos-delay="100"></div>
-        </div>
 
         {{-- Grid untuk Logo Partner --}}
         <div class="grid max-w-screen-xl grid-cols-2 gap-8 sm:gap-12 md:grid-cols-3 lg:grid-cols-5 mx-auto"

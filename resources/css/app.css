@@ -153,7 +153,7 @@
 
 .dropdown-item:hover {
     /* Hanya ubah background agar teks tetap terbaca */
-    background-color: var(--primary);
+    background-color: var(--nav-shadow-color);
     --tw-bg-opacity: 0.1;
 }
 

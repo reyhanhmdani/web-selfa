@@ -1,6 +1,6 @@
 <nav class="floating-nav floating-nav-mobile md:floating-nav">
     {{-- Logo dan Judul untuk Desktop dan Mobile --}}
-    <div class="flex items-center">
+    <div class="hidden items-center md:flex">
         @if ($navbar && $navbar->logo)
         <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-10 hidden md:block" />
         @endif
@@ -17,17 +17,27 @@
         @foreach ($navbar->navigation as $nav)
         @if (($nav['type'] ?? '') === 'dropdown' && isset($nav['children']))
         <div class="dropdown relative">
-            {{-- KELAS DIUBAH --}}
-            <button data-toggle="dropdown" class="nav-item flex items-center rounded-full p-2 md:px-4">
+            {{-- TAMBAHKAN KELAS UNTUK LAYOUT & ALIGNMENT --}}
+            <button data-toggle="dropdown"
+                class="nav-item flex flex-col items-center rounded-full p-2 text-center md:flex-row md:px-4">
+
+                {{-- Ikon Utama --}}
                 @if (! empty($nav['icon']))
                 <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
                 @endif
-                <span class="ml-2 hidden md:inline">{{ $nav['label'] }}</span>
-                <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+
+                {{-- Grup untuk Label dan Chevron --}}
+                <div class="flex items-center">
+                    <span
+                        class="mt-1 block text-[10px] font-medium leading-tight md:ml-2 md:mt-0 md:inline md:text-sm">{{
+                        $nav['label'] }}</span>
+
+                    {{-- Hapus 'hidden' dan 'md:inline-block' agar selalu tampil --}}
+                    <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                </div>
             </button>
             <div class="dropdown-menu absolute hidden transition-all duration-300">
                 @foreach ($nav['children'] as $child)
-                {{-- KELAS DIUBAH --}}
                 <a href="{{ $child['url'] }}"
                     class="dropdown-item {{ ($child['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} block px-4 py-2"
                     {{ ($child['type'] ?? '' )==='external' ? 'target=_blank' : '' }}>
@@ -40,16 +50,16 @@
             </div>
         </div>
         @elseif ($nav['button'] ?? false)
-        {{-- Tombol Daftar ditampilkan di luar navbar-nav --}}
         @else
-        {{-- KELAS DAN LOGIKA ACTIVE DIUBAH --}}
-        <a href="{{ $nav['url'] }}"
-            class="nav-item {{ ($nav['type'] ?? '') === 'anchor' ? 'anchor-link' : '' }} {{ request()->is(trim($nav['url'], '/')) ? 'active' : '' }} rounded-full p-2 md:px-4"
-            {{ ($nav['type'] ?? '' )==='external' ? 'target=_blank' : '' }}>
+        <a href="{{ $nav['url'] }}" {{-- TAMBAHKAN KELAS UNTUK LAYOUT & ALIGNMENT --}}
+            class="nav-item flex flex-col items-center {{-- ... --}} rounded-full p-2 md:flex-row md:px-4" {{-- ...
+            --}}>
             @if (! empty($nav['icon']))
             <i class="fa-solid fa-{{ $nav['icon'] }}"></i>
             @endif
-            <span class="ml-2 hidden md:inline">{{ $nav['label'] }}</span>
+            {{-- UBAH KELAS DI SPAN INI --}}
+            <span class="mt-1 block text-[10px] font-medium leading-tight md:ml-2 md:mt-0 md:inline md:text-sm">{{
+                $nav['label'] }}</span>
         </a>
         @endif
         @endforeach

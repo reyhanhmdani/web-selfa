@@ -4,15 +4,13 @@ Anda bisa langsung menyalin dan menempelkan seluruh konten di bawah ini ke dalam
 
 -----
 
-# \<a href="\#"\>Website Yayasan Sayf El Falah (SELF-A)\</a\> 🌿
+# Website Yayasan Sayf El Falah (SELF-A) 🌿
 
 > Sebuah platform digital terintegrasi untuk mengelola dan mempublikasikan seluruh kegiatan di bawah naungan Yayasan Sayf El Falah, mencakup Pondok Pesantren, TK, dan SD.
 
 Selamat datang di repositori resmi Website Yayasan Sayf El Falah\! Proyek ini dikembangkan dengan **Laravel 11** dan **Tailwind CSS v3** sebagai fondasi backend dan frontend yang kuat. Tujuannya adalah untuk menciptakan sebuah ekosistem digital yang memudahkan pengelolaan informasi, pendaftaran siswa/santri, dan menampilkan profil setiap unit pendidikan dengan tampilan yang menarik dan modern.
 
-\<p align="center"\>
-\<img src="httpsGANTI\_DENGAN\_LINK\_SCREENSHOT\_ANDA.png" alt="Tampilan Website Yayasan SELF-A"\>
-\</p\>
+**Tampilan Website Yayasan SELFA**
 
 -----
 
@@ -133,4 +131,4 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
 
 Proyek ini terbuka untuk ide, saran, dan kontribusi. Jika Anda menemukan bug atau memiliki ide fitur yang brilian, jangan ragu untuk membuat *Issue* atau *Pull Request*.
 
-Terima kasih telah mengunjungi repositori ini\!
+Terima kasih telah mengunjungi repositori ini !
