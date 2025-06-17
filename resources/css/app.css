@@ -118,13 +118,13 @@
     border-radius: 50px;
     box-shadow: 0 4px 6px -1px var(--nav-shadow-color);
     z-index: 999;
-    padding: 0.5rem;
+    padding: 0.1rem;
     display: flex;
     align-items: center;
 }
 
 .floating-nav-mobile {
-    width: 90%;
+    width: 95%;
     justify-content: space-around;
 }
 
