@@ -2,22 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+    h1 {
+        @apply text-2xl md:text-3xl; /* Mobile: 4xl, Desktop: 5xl */
+    }
+    h2 {
+        @apply text-xl md:text-2xl; /* Mobile: 3xl, Desktop: 4xl */
+    }
+    h3 {
+        @apply text-lg md:text-xl; /* Mobile: 2xl, Desktop: 3xl */
+    }
+    h4 {
+        @apply text-base md:text-lg; /* Mobile: xl, Desktop: 2xl */
+    }
+    p {
+        @apply text-sm md:text-base; /* Mobile: base, Desktop: lg */
+    }
+}
+
+
 :root {
     --primary: #00ab66;
-    --yellow:#fed101;
-    --light:#f8f8f8;
-    --secondary:#0f489a;
+    --yellow: #f8f806;
+    --light: #f8f8f8;
+    --secondary: #2f308a;
     --thirdy: #00c2ff;
     --green: #c2ce3b;
+    --text: #4b5563;
 
     --hover--primary: #00ab2535;
 }
 
 .page-home {
-    --primary: #0f499b; /* Di-overr ide menjadi nilai --secondary global (Biru) */
-    --secondary: #00ab66; /* Di-override menjadi nilai --primary global (Hijau) */
+    --primary: #2f308a;
+    --primary-dark: #24256c;
+    --secondary: #f8f806;
+    --secondary-dark: #e4e404;
 
-     --hover--primary: #0f499b3a;
+    --text: #4b5563;
+
+    --light: #f8f8f8;
+
+    --hover--primary: #2f318a49;
 }
 
 /* Tema untuk halaman Ponpes (dan default) */
@@ -30,7 +57,7 @@
 /* Tema untuk halaman Home */
 .page-home {
     /* Atur semua variabel tema untuk halaman ini di sini */
-    --nav-shadow-color: var(--thirdy); /* <-- Warna shadow navbar: biru */
+    --nav-shadow-color: #2f318a9e; /* <-- Warna shadow navbar: biru */
 }
 /* tombol melayang */
 /* Custom CSS for the bounce animation */
@@ -56,8 +83,8 @@
 /* Smaller floating button */
 .floating-container {
     position: fixed;
-    bottom: 1.25rem;
-    right: 1.25rem;
+    /* bottom: 1.25rem; */
+    /* right: 1.25rem; */
     z-index: 999;
     transition: all 0.3s ease;
 }
@@ -68,7 +95,60 @@
     text-decoration: none;
 }
 
-/* font */
+/* Button */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1.25rem; /* py-2 px-5 */
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.69rem;
+    font-weight: 600; /* font-semibold */
+    text-align: center;
+    transition: all 200ms ease-in-out;
+    border: 2px solid transparent;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+    /* Breakpoint md: */
+    .btn {
+        padding: 0.75rem 1.5rem; /* md:py-3 md:px-6 */
+        font-size: 0.8rem; /* md:text-base */
+    }
+}
+
+/* ... kelas .btn-primary, .btn-secondary, .btn-outline Anda dari sebelumnya ... */
+
+/* TAMBAHKAN KELAS BARU INI */
+/* Tombol Outline untuk Latar Gelap */
+.btn-outline-light {
+    background-color: transparent;
+    /* border-color: var(--light); */
+    color: var(--light);
+    background-color: var(--primary);
+}
+
+.btn-outline-light:hover {
+    background-color: var(--light);
+    color: var(--primary); /* Teks menjadi biru tua saat hover */
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    /* border-color: var(--primary); */
+    color: var(--primary);
+    background-color: var(--light);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--secondary-dark);
+    color: var(--light); /* Teks menjadi biru tua saat hover */
+}
 
 /* title section color */
 .title-section {
@@ -78,7 +158,7 @@
 }
 /* sub title section color */
 .sub-title-section {
-    color: var(--yellow);
+    color: var(--text);
 }
 /* navbar */
 .navbar-title {
@@ -86,7 +166,7 @@
 }
 
 .nav-item {
-    color: #4B5563; /* Default: text-gray-600 */
+    color: #4b5563; /* Default: text-gray-600 */
     transition-property: color, background-color;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
@@ -107,6 +187,9 @@
     --tw-bg-opacity: 0.1;
 }
 
+.text-shadow {
+    text-shadow: 1px 1px 3px var(--text-shadow-color, rgba(0, 0, 0, 0.4));
+}
 
 .floating-nav {
     position: fixed;
@@ -128,7 +211,14 @@
     justify-content: space-around;
 }
 
-.dropdown.open .dropdown-menu {
+.nav-logo-mobile {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0 50px 50px 0;
+    padding: 0.7rem;
+    box-shadow: 0 4px 6px -1px var(--nav-shadow-color);
+}
+
+.floating-content .dropdown.open .dropdown-menu {
     display: block;
 }
 

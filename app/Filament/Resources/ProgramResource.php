@@ -16,17 +16,16 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use App\Filament\Resources\ProgramResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use Filament\Forms\Get;
 
 class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-command-line';
-
-    // ⬇ Tambahkan navigation group
     protected static ?string $navigationGroup = 'Content';
-    protected static ?string $navigationLabel = 'Program Ponpes Selfa';
+    protected static ?string $navigationLabel = 'Program';
 
     public static function form(Form $form): Form
     {
@@ -84,7 +83,7 @@ class ProgramResource extends Resource
                 TextInput::make('order')
                     ->label('Urutan Tampil')
                     ->numeric()
-                    ->default(1),
+                    ->default(fn(Get $get) => Program::max('order') + 1),
             ]);
     }
 

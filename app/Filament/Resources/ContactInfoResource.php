@@ -71,11 +71,11 @@ class ContactInfoResource extends Resource
                     ->label('Tampil di')
                     ->badge() // Menampilkan sebagai badge (lebih visual)
                     ->color(fn (string $state): string => match ($state) {
-                        'utama' => 'success', // Hijau
-                        'ponpes' => 'info',    // Biru
-                        'sd' => 'warning',   // Kuning
-                        'tk&kb' => 'danger',  // Merah
-                        default => 'secondary', // Abu-abu untuk nilai tak dikenal
+                        'utama' => 'info',
+                        'ponpes' => 'success',
+                        'sd' => 'warning',
+                        'tk&kb' => 'danger',
+                        default => 'secondary',
                     })
                     ->searchable() // Memungkinkan pencarian berdasarkan status
                     ->sortable(), // Abu-abu untuk nilai tak dikenal

@@ -31,10 +31,11 @@ class AsatidResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
-    protected static ?string $navigationGroup = 'Database SELFA';
+    protected static ?string $navigationGroup = 'Database Ponpes';
     protected static ?string $navigationLabel = 'Para Asatid';
+    protected static ?string $pluralLabel = 'Asatid';
 
-    protected static ?string $pluralLabel = 'Santri';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {

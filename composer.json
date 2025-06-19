@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.4",
         "barryvdh/laravel-dompdf": "^3.1",
+        "doctrine/dbal": "^4.2",
         "filament/filament": "^3.2",
         "filament/notifications": "^3.3",
         "filament/widgets": "^3.3",

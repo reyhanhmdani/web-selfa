@@ -23,8 +23,10 @@ class TeamResource extends Resource
 {
     protected static ?string $model = Team::class;
 
-    protected static ?string $navigationGroup = 'Database SELFA';
+    protected static ?string $navigationGroup = 'Database Ponpes';
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
 
     public static function form(Form $form): Form

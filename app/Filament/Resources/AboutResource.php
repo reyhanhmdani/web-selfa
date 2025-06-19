@@ -65,7 +65,7 @@ class AboutResource extends Resource
                     ->label('Gambar 1')
                     ->image()
                     ->directory('about-images')
-                    ->maxSize(2048) // Maks 2MB
+                    ->maxSize(8082)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
                     ->deleteUploadedFileUsing(function ($record) {
                         // Hapus file lama jika ada
@@ -77,21 +77,6 @@ class AboutResource extends Resource
                         return time() . '-' . $file->getClientOriginalName();
                     })
                     ->required(),
-                FileUpload::make('image_2')
-                    ->label('Gambar 2')
-                    ->image()
-                    ->directory('about-images')
-                    ->maxSize(2048) // Maks 2MB
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                    ->deleteUploadedFileUsing(function ($record) {
-                        // Hapus file lama jika ada
-                        if ($record && $record->image_2 && Storage::disk('public')->exists($record->image_2)) {
-                            Storage::disk('public')->delete($record->image_2);
-                        }
-                    })
-                    ->getUploadedFileNameForStorageUsing(function ($file) {
-                        return time() . '-' . $file->getClientOriginalName();
-                    }),
             ]);
     }
 
@@ -119,9 +104,7 @@ class AboutResource extends Resource
                     ->label('Deskripsi')
                     ->limit(50),
                 ImageColumn::make('image_1')
-                    ->label('Gambar 1'),
-                ImageColumn::make('image_2')
-                    ->label('Gambar 2'),
+                    ->label('Gambar 1')
             ])
             ->filters([
                 //
@@ -137,10 +120,10 @@ class AboutResource extends Resource
             ]);
     }
 
-    public static function canCreate(): bool
-    {
-        return About::count() === 0;
-    }
+    // public static function canCreate(): bool
+    // {
+    //     return About::count() === 0;
+    // }
 
     public static function getPages(): array
     {

@@ -17,6 +17,8 @@ export default {
             colors: {
                 primary: '#00ab66',
                 secondary: '#0f499b',
+                primaryHome: '#2f308a',
+                secondaryHome : '#f8f806',
             },
         },
     },

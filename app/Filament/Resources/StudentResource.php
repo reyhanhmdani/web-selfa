@@ -32,12 +32,11 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
-    // ⬇ Tambahkan navigation group
-    protected static ?string $navigationGroup = 'Database SELFA';
+    protected static ?string $navigationGroup = 'Database Ponpes';
     protected static ?string $navigationLabel = 'Para Santri';
-
     protected static ?string $pluralLabel = 'Santri';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {

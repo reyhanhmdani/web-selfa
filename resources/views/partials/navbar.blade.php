@@ -1,3 +1,13 @@
+{{-- <div
+    class="nav-logo-mobile fixed border-4 border-double border-primaryHome top-0 left-0 z-50 flex items-center p-4 md:hidden">
+    @if ($navbar && $navbar->logo)
+    <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-8" />
+    @endif
+    <p class="navbar-title text-shadow text-base font-bold">
+        {{ $navbar->title ?? 'Ponpes Selfa' }}
+    </p>
+</div> --}}
+
 <nav class="floating-nav floating-nav-mobile md:floating-nav">
     {{-- Logo dan Judul untuk Desktop dan Mobile --}}
     <div class="hidden items-center md:flex">
@@ -5,8 +15,8 @@
         <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-10 hidden md:block" />
         @endif
 
-        <p class="navbar-title text-base font-bold md:text-2xl">
-            {{ $navbar->title ?? 'Ponpes Selfa' }}
+        <p class="navbar-title text-shadow text-base font-bold md:text-xl">
+            {{ $navbar->title }}
         </p>
     </div>
 

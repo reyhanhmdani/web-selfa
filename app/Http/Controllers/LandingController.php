@@ -23,37 +23,37 @@ class LandingController extends Controller
     {
         // Section
         $navbar = Navbar::where('status_page', 'utama')->first();
-        $header = SectionHeader::where('section_key', 'program')->first();
-        $about = About::first();
+        $sections = SectionHeader::where('status_page', 'utama')->get()->keyBy('section_key');
+        $about = About::where('status_page', 'utama')->first();
         $pendidikans = Pendidikan::take(3)->get();
         $footer = Footer::getSingleton();
 
         // Content
         $totalSantri = Student::count();
-        $programs = Program::orderBy('order')->get();
+        $programs = Program::orderBy('order')->where('status_page', 'utama')->get();
         $blogs = Blog::latest()->get();
         $lembagas = Lembaga::all();
-        $totalLembaga = Lembaga::count();
+        $totalLembaga = $lembagas->count();
         $teams = Team::all();
-        $galeriFoto = GaleriFoto::all();
+        $galeriFoto = GaleriFoto::latest()->take(8)->get();
         $visiMisi = Visimisi::first();
 
         // Kontak
-        $alamat = ContactInfo::where('key', 'alamat')->first()?->value;
-        $telepon = ContactInfo::where('key', 'telepon')->first()?->value;
-        $email = ContactInfo::where('key', 'email')->first()?->value;
-        $jam = ContactInfo::where('key', 'jam')->first()?->value;
+       // MENJADI (1 Query):
+        $kontak = ContactInfo::whereIn('key', ['alamat', 'telepon', 'email', 'jam'])
+                        ->get()
+                        ->keyBy('key');
 
-        return view('pages.home', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'alamat', 'telepon', 'email', 'jam'));
+        return view('pages.home', compact('navbar', 'sections', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
     }
 
 
     public function ponpes ()
     {
          // Section
-       $navbar = Navbar::where('status_page', 'ponpes')->first();
-        $header = SectionHeader::where('section_key', 'program')->first();
-        $about = About::first();
+        $navbar = Navbar::where('status_page', 'ponpes')->first();
+        $sections = SectionHeader::where('status_page', 'ponpes')->get()->keyBy('section_key');
+        $about = About::where('status_page', 'ponpes')->first();
         $pendidikans = Pendidikan::take(3)->get();
         $footer = Footer::getSingleton();
 
@@ -62,17 +62,16 @@ class LandingController extends Controller
         $programs = Program::orderBy('order')->get();
         $blogs = Blog::latest()->get();
         $lembagas = Lembaga::all();
-        $totalLembaga = Lembaga::count();
+        $totalLembaga = $lembagas->count();
         $teams = Team::all();
-        $galeriFoto = GaleriFoto::all();
+        $galeriFoto = GaleriFoto::latest()->take(9)->get();
         $visiMisi = Visimisi::first();
 
         // Kontak
-        $alamat = ContactInfo::where('key', 'alamat')->first()?->value;
-        $telepon = ContactInfo::where('key', 'telepon')->first()?->value;
-        $email = ContactInfo::where('key', 'email')->first()?->value;
-        $jam = ContactInfo::where('key', 'jam')->first()?->value;
+        $kontak = ContactInfo::whereIn('key', ['alamat', 'telepon', 'email', 'jam'])
+                        ->get()
+                        ->keyBy('key');
 
-        return view('pages.ponpes', compact('navbar', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'alamat', 'telepon', 'email', 'jam'));
+        return view('pages.ponpes', compact('navbar', 'sections',  'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
     }
 }

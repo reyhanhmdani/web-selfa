@@ -4,12 +4,12 @@
 
 @section('content')
 <!-- Floating Register Button -->
-<div class="floating-container right-5 top-5 md:bottom-5 md:right-5 md:top-auto">
+<div class="floating-container right-5 bottom-20 mb-10 md:bottom-5 md:right-5 md:mb-0">
     <a href="#kontak" class="floating-content group">
         <div
             class="flex items-center gap-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 px-4 py-2 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
             <div
-                class="floating-icon flex h-9 w-9 items-center justify-center rounded-full bg-white text-lg text-blue-500 transition-transform group-hover:rotate-12">
+                class="floating-icon flex h-7 w-7 items-center justify-center rounded-full bg-white text-lg text-blue-500 transition-transform group-hover:rotate-12">
                 <i class="fas fa-headset"></i>
             </div>
             <span class="floating-text hidden whitespace-nowrap text-sm font-medium sm:block">
@@ -21,7 +21,15 @@
 
 <!-- Header Section -->
 <section id="Home" class="relative h-screen overflow-hidden text-white">
-    <!-- Swiper Background -->
+    <div
+        class="nav-logo-mobile absolute top-0 left-0 z-30 flex items-center border-4 border-double border-primaryHome p-4 md:hidden">
+        @if ($navbar && $navbar->logo)
+        <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-8" />
+        @endif
+        <p class="navbar-title text-shadow font-bold">
+            {{ $navbar->title}}
+        </p>
+    </div>
     <div class="absolute inset-0 z-0">
         <div class="swiper-container bg-swiper h-full">
             <div class="swiper-wrapper">
@@ -40,20 +48,18 @@
     <div class="relative z-20 flex h-full items-center">
         <div class="container mx-auto px-4 text-center">
             <div class="mx-auto max-w-2xl">
-                <h1 class="mb-4 text-4xl font-bold md:text-5xl">
-                    Selamat Datang di Ponpes Selfa
+                <h1 class="mb-4 font-bold">
+                    Selamat Datang di Pondok Pesantren Sel fa
                 </h1>
-                <p class="mb-6 text-xl">
+                <h3 class="mb-10">
                     Membentuk generasi Qur'ani yang berakhlak mulia, berwawasan luas, dan
                     mandiri.
-                </p>
-                <div class="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-6">
-                    <a href="#About"
-                        class="rounded-full bg-white px-5 py-2 text-sm font-semibold text-green-700 shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gray-100 md:px-6 md:py-3 md:text-base">
+                </h3>
+                <div class="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-8">
+                    <a href="#About" class="btn btn-outline-light">
                         Jelajahi Lebih
                     </a>
-                    <a href="pendaftaran"
-                        class="rounded-full border-2 border-white px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-green-600 md:px-6 md:py-3 md:text-base">
+                    <a href="pendaftaran" class="btn btn-outline-light">
                         Daftar Sekarang
                     </a>
                 </div>
@@ -71,13 +77,12 @@
                     class="mx-auto rounded-lg" style="width: 360px" />
             </div>
             <div class="md:w-1/2">
-                <h2 class="title-section mb-4 text-3xl font-bold text-gray-800" data-aos="fade-left"
-                    data-aos-delay="200">
+                <h3 class="title-section mb-4 font-bold text-gray-800" data-aos="fade-left" data-aos-delay="200">
                     {{ $about->title_section }}
-                </h2>
-                <h3 class="sub-title-section mb-4 text-2xl font-semibold" data-aos="fade-left" data-aos-delay="300">
-                    {{ $about->sub_title }}
                 </h3>
+                <h4 class="sub-title-section mb-4 font-semibold" data-aos="fade-left" data-aos-delay="300">
+                    {{ $about->sub_title }}
+                </h4>
                 <p class="mb-4 text-gray-600" data-aos="fade-left" data-aos-delay="400">
                     {!! nl2br(e($about->description)) !!}
                 </p>
@@ -116,10 +121,10 @@
         $section = sectionHeader('visi&misi');
         @endphp
 
-        <h2 class="title-section mb-8 text-3xl font-bold uppercase text-gray-800" data-aos="fade-up"
-            data-aos-delay="200" data-aos-duration="500">
+        <h1 class="title-section mb-8 font-bold uppercase text-gray-800" data-aos="fade-up" data-aos-delay="200"
+            data-aos-duration="500">
             {{ $section->title }}
-        </h2>
+        </h1>
         <a href="{{ asset('assets/img/visi-misi.jpg') }}" target="_blank" class="group inline-block">
             <div
                 class="animate-fade-in-up mx-auto w-4/5 max-w-xs transition-transform duration-300 group-hover:scale-105 md:max-w-sm lg:max-w-md">
@@ -137,18 +142,16 @@
 <section id="Program" class="bg-gray-50 py-16">
     <div class="container mx-auto px-4">
         <div class="mb-12 text-center">
-            @php
-            $section = sectionHeader('program');
-            @endphp
-
-            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800" data-aos="fade-up" data-aos-delay="200"
-                data-aos-duration="500">
-                {{ $section->title }}
-            </h2>
-            <p class="mb-5 text-xl text-gray-600" data-aos="fade-down" data-aos-delay="200">
-                {{ $section->subtitle }}
+            {{-- Akses judul & subtitle untuk 'program' dari variabel $sections --}}
+            @if (isset($sections['program']))
+            <h1 class="title-section mb-4 text-3xl font-bold text-gray-800" ...>
+                {{ $sections['program']->title }}
+            </h1>
+            <p class="mb-5 text-xl text-gray-600" ...>
+                {{ $sections['program']->subtitle }}
             </p>
             <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            @endif
         </div>
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -177,10 +180,10 @@
 <section class="bg-white py-16">
     <div class="container mx-auto px-4">
         <div class="mb-12 text-center">
-            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800" data-aos="fade-up" data-aos-delay="200"
+            <h1 class="title-section mb-4 font-bold text-gray-800" data-aos="fade-up" data-aos-delay="200"
                 data-aos-duration="500">
                 Galeri Kegiatan
-            </h2>
+            </h1>
             <div class="mx-auto h-1 w-20 bg-blue-500"></div>
         </div>
 
@@ -202,14 +205,15 @@
 <section class="bg-gray-50 py-16">
     <div class="container mx-auto px-4">
         <div class="mb-12 text-center">
-            @php
-            $section = sectionHeader('team');
-            @endphp
-
-            <h2 class="title-section mb-4 text-3xl font-bold text-gray-800">
-                {{ $section->title }}
-            </h2>
+            @if (isset($sections['Team_yayasan']))
+            <h1 class="title-section mb-4 font-bold text-gray-800" ...>
+                {{ $sections['Team_yayasan']->title }}
+            </h1>
+            <p class="mb-5 text-gray-600" ...>
+                {{ $sections['Team_yayasan']->subtitle }}
+            </p>
             <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            @endif
         </div>
 
         <div class="grid grid-cols-2 justify-center gap-8 md:flex md:flex-wrap md:justify-center">
@@ -221,10 +225,10 @@
                         <img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}"
                             class="h-full w-full object-cover" />
                     </div>
-                    <h3 class="mb-1 truncate text-base font-semibold text-green-500 sm:text-lg md:text-xl">
+                    <h3 class="mb-1 truncate font-semibold text-green-500">
                         {{ $team->name }}
                     </h3>
-                    <p class="mb-3 line-clamp-2 text-sm text-blue-600 sm:text-base">
+                    <p class="mb-3 line-clamp-2text-blue-600">
                         {{ $team->position }}
                     </p>
                 </div>
@@ -257,47 +261,40 @@
 </section>
 
 <!-- Stats Section -->
-<section class="bg-green-600 py-16 text-white">
+<section class="bg-primary py-16 text-white">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
             <div>
-                <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="2023">
+                <div class="mb-2 text-3xl font-bold" data-toggle="counter-up" data-count="2023">
                     0
                 </div>
-                <div class="text-lg">Tahun Berdiri</div>
+                <p class="">Tahun Berdiri</p>
             </div>
             <div>
-                <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="{{ $totalSantri + 11 }}">
+                <div class="mb-2 text-3xl font-bold" data-toggle="counter-up" data-count="{{ $totalSantri + 11 }}">
                     0
                 </div>
-                <div class="text-lg">Santri</div>
+                <p class="">Santri</p>
             </div>
             <div>
-                <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="8">
+                <div class="mb-2 text-3xl font-bold" data-toggle="counter-up" data-count="8">
                     0
                 </div>
-                <div class="text-lg">Pengajar</div>
+                <p class="">Pengajar</p>
             </div>
             <div>
-                <div class="mb-2 text-4xl font-bold" data-toggle="counter-up" data-count="{{ $totalLembaga }}">
+                <div class="mb-2 text-3xl font-bold" data-toggle="counter-up" data-count="{{ $totalLembaga }}">
                     0
                 </div>
-                <div class="text-lg">Lembaga Yayasan</div>
+                <p class="">Cabang Yayasan</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Partner Institutions Section -->
-<section id="partner" class="bg-gray-100 dark:bg-gray-50 py-20">
+<section id="partner" class="py-20">
     <div class="container mx-auto px-4">
-        {{-- Judul Seksi --}}
-        <div class="mb-16 text-center">
-            <h2 class="title-section mb-4 text-3xl font-bold" data-aos="fade-up">
-                Partner Pondok
-            </h2>
-            <div class="mx-auto h-1 w-24 bg-blue-500" data-aos="fade-up" data-aos-delay="100"></div>
-        </div>
 
         {{-- Grid untuk Logo Partner --}}
         <div class="grid max-w-screen-xl grid-cols-2 gap-8 sm:gap-12 md:grid-cols-3 lg:grid-cols-5 mx-auto"
@@ -326,10 +323,10 @@
             $section = sectionHeader('blog');
             @endphp
 
-            <h2 class="mb-1 text-2xl title-section sm:text-3xl">
+            <h1 class="mb-1 title-section font-bold">
                 {{ $section->title }}
-            </h2>
-            <h3 class="mb-4 text-base font-semibold text-blue-500 sm:text-xl">
+            </h1>
+            <h3 class="mb-4 font-semibold text-blue-500">
                 {{ $section->subtitle }}
             </h3>
             <div class="mx-auto h-1 w-20 bg-green-500"></div>
@@ -360,13 +357,13 @@
                             class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
                     </div>
                     <div class="p-4">
-                        <div class="mb-1 text-xs text-gray-500">
+                        <div class="mb-1 text-gray-500">
                             {{ $blog->created_at->format('d M Y') }}
                         </div>
-                        <h3 class="mb-1 text-sm font-semibold text-gray-800">
+                        <h1 class="mb-1 font-semibold text-gray-800">
                             {{ $blog->title }}
-                        </h3>
-                        <p class="mb-2 text-sm text-gray-600">
+                        </h1>
+                        <p class="mb-2 text-gray-600">
                             {{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 70, '...') }}
                         </p>
                         <a href="{{ $blog->instagram_link }}" class="text-sm font-medium text-green-600">
@@ -400,8 +397,7 @@
         @endif
 
         <div class="mt-10 text-center">
-            <a href="#"
-                class="inline-block rounded-full bg-green-600 px-6 py-3 font-medium text-white shadow-md transition hover:bg-green-700">
+            <a href="#" class="btn btn-outline-light">
                 Lihat Semua Berita
             </a>
         </div>
@@ -416,7 +412,7 @@
             $section = sectionHeader('contact');
             @endphp
 
-            <h2 class="mb-4 text-3xl font-bold title-section">{{ $section->title }}</h2>
+            <h2 class="mb-4 font-bold title-section">{{ $section->title }}</h2>
             <div class="mx-auto h-1 w-20 bg-blue-500"></div>
         </div>
 
@@ -424,49 +420,49 @@
             <!-- Kolom Kiri: Hubungi Kami -->
             <div class="md:w-1/2">
                 <div class="h-full rounded-xl bg-white p-6 shadow-md">
-                    <h3 class="mb-4 text-xl font-semibold">{{ $section->subtitle }}</h3>
+                    <h3 class="mb-4 font-semibold">{{ $section->subtitle }}</h3>
 
                     <!-- Alamat -->
                     <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-green-600">
+                        <div class="mr-4 mt-1 text-primaryHome">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div>
                             <h4 class="font-medium">Alamat</h4>
-                            <p class="text-gray-600">{!! nl2br(e($alamat)) !!}</p>
+                            <p class="text-gray-600">{!! nl2br(e($kontak['alamat']->value)) !!}</p>
                         </div>
                     </div>
 
                     <!-- Telepon -->
                     <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-green-600">
+                        <div class="mr-4 mt-1 text-primaryHome">
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <div>
                             <h4 class="font-medium">Telepon</h4>
-                            <p class="text-gray-600">{!! nl2br(e($telepon)) !!}</p>
+                            <p class="text-gray-600">{!! nl2br(e($kontak['telepon']->value)) !!}</p>
                         </div>
                     </div>
 
                     <!-- Email -->
                     <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-green-600">
+                        <div class="mr-4 mt-1 text-primaryHome">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
                             <h4 class="font-medium">Email</h4>
-                            <p class="text-gray-600">{{ $email }}</p>
+                            <p class="text-gray-600">{{ $kontak['email']->value}}</p>
                         </div>
                     </div>
 
                     <!-- Jam Operasional -->
                     <div class="flex items-start">
-                        <div class="mr-4 mt-1 text-green-600">
+                        <div class="mr-4 mt-1 text-primaryHome">
                             <i class="fas fa-clock"></i>
                         </div>
                         <div>
                             <h4 class="font-medium">Jam Operasional</h4>
-                            <p class="text-gray-600">{!! nl2br(e($jam)) !!}</p>
+                            <p class="text-gray-600">{!! nl2br(e($kontak['jam']->value)) !!}</p>
                         </div>
                     </div>
                 </div>
@@ -475,7 +471,7 @@
             <!-- Kolom Kanan: Google Maps -->
             <div class="md:w-1/2">
                 <div class="h-full rounded-xl bg-white p-6 shadow-md">
-                    <h3 class="mb-4 text-xl font-semibold">Lokasi Kami</h3>
+                    <h3 class="mb-4 font-semibold">Lokasi Kami</h3>
                     <div class="relative h-0 w-full overflow-hidden rounded-lg pb-[56%]">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1222.7013959293104!2d110.60411067090085!3d-7.692333357861694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a43f01ae7ca55%3A0x3052ee63172a145f!2sMasjid%20Al-Muhajirin!5e0!3m2!1sid!2sid!4v1743005025922!5m2!1sid!2sid"
@@ -489,21 +485,19 @@
 </section>
 
 <!-- Register Section -->
-<section id="daftar" class="bg-green-600 py-16 text-white">
+<section id="daftar" class="bg-primaryHome py-16 text-white">
     <div class="container mx-auto px-4 text-center">
-        <h2 class="mb-6 text-3xl font-bold">Daftarkan Putra/Putri Anda Sekarang</h2>
-        <p class="mx-auto mb-8 max-w-2xl text-xl">
+        <h2 class="mb-6 font-bold">Daftarkan Putra/Putri Anda Sekarang</h2>
+        <p class="mx-auto mb-8 max-w-2xl">
             Bergabunglah dengan Ponpes Selfa, Bersama Ponpes Selfa, kami membina jiwa berilmu
             dan beramal, untuk Islam dan kemaslahatan masyarakat..
         </p>
-        <a href="pendaftaran"
-            class="inline-block rounded-full bg-white px-8 py-4 text-lg font-bold text-green-600 shadow-lg transition hover:bg-gray-100">
+        <a href="pendaftaran" class="btn btn-outline-dark">
             Daftar Sekarang
         </a>
     </div>
 </section>
 
-<!-- Footer -->
 
 @push('scripts')
 <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>

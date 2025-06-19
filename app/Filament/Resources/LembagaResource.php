@@ -25,8 +25,8 @@ class LembagaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationGroup = 'Database SELFA';
-    protected static ?string $navigationLabel = 'Lembaga Cabang';
+    protected static ?string $navigationGroup = 'Database Ponpes';
+    protected static ?string $navigationLabel = 'Partner Yayasan';
 
     public static function form(Form $form): Form
     {

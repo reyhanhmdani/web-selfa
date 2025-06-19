@@ -4,16 +4,16 @@ namespace App\Filament\Resources\SectionHeaderResource\Pages;
 
 use App\Filament\Resources\SectionHeaderResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ManageRecords;
 
-class EditSectionHeader extends EditRecord
+class ManageSectionHeaders extends ManageRecords
 {
     protected static string $resource = SectionHeaderResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\CreateAction::make(),
         ];
     }
 }

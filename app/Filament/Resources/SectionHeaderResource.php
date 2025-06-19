@@ -21,6 +21,7 @@ class SectionHeaderResource extends Resource
     protected static ?string $model = SectionHeader::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Judul Seksi';
 
     public static function form(Form $form): Form
     {
@@ -47,8 +48,7 @@ class SectionHeaderResource extends Resource
                     ->required(),
 
                 TextInput::make('subtitle')
-                    ->label('Subjudul Section')
-                    ->required(),
+                    ->label('Subjudul Section'),
             ]);
     }
 
@@ -107,9 +107,7 @@ class SectionHeaderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSectionHeaders::route('/'),
-            'create' => Pages\CreateSectionHeader::route('/create'),
-            'edit' => Pages\EditSectionHeader::route('/{record}/edit'),
+            'index' => Pages\ManageSectionHeaders::route('/'),
         ];
     }
 }
