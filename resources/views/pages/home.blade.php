@@ -19,53 +19,7 @@
 </div>
 
 <!-- Header Section -->
-<section id="Home" class="relative h-screen overflow-hidden text-white">
-    <div
-        class="nav-logo-mobile absolute top-0 left-0 z-30 flex items-center border-4 border-double border-primaryHome p-4 md:hidden">
-        @if ($navbar && $navbar->logo)
-        <img src="{{ asset('storage/' . $navbar->logo) }}" alt="Logo" class="mr-3 h-8" />
-        @endif
-        <p class="navbar-title text-shadow font-bold">
-            {{ $navbar->title}}
-        </p>
-    </div>
-    <div class="absolute inset-0 z-0">
-        <div class="swiper-container bg-swiper h-full">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide h-full bg-cover bg-center"
-                    style="background-image: url('{{ asset('assets/img/masjidselfa1.jpg') }}')"></div>
-                <div class="swiper-slide h-full bg-cover bg-center"
-                    style="background-image: url('{{ asset('assets/img/masjidselfa2.jpg') }}')"></div>
-            </div>
-        </div>
-
-        <!-- Overlay gelap -->
-        <div class="absolute inset-0 z-10 bg-black/60"></div>
-    </div>
-
-    <!-- Konten di atas slider -->
-    <div class="relative z-20 flex h-full items-center">
-        <div class="container mx-auto px-4 text-center">
-            <div class="mx-auto max-w-2xl">
-                <h1 class="mb-4 font-bold">
-                    Selamat Datang di Yayasan Selfa
-                </h1>
-                <h3 class="mb-10">
-                    Membentuk generasi Qur'ani yang berakhlak mulia, berwawasan luas, dan
-                    mandiri.
-                </h3>
-                <div class="flex flex-col items-center justify-center gap-3 md:flex-row md:gap-8">
-                    <a href="#About" class="btn btn-outline-light">
-                        Jelajahi Lebih
-                    </a>
-                    <a href="pendaftaran" class="btn btn-outline-light">
-                        Daftar Sekarang
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@include('partials.sections.header')
 
 <!-- About Section -->
 <section id="About" class="bg-white py-16">
@@ -149,7 +103,7 @@
             <p class="mb-5 text-xl text-gray-600" ...>
                 {{ $sections['program']->subtitle }}
             </p>
-            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            <div class="mx-auto h-1 w-20 garis-judul"></div>
             @endif
         </div>
 
@@ -183,7 +137,7 @@
                 data-aos-duration="500">
                 Galeri Kegiatan
             </h1>
-            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            <div class="mx-auto h-1 w-20 garis-judul"></div>
         </div>
 
         <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -211,7 +165,7 @@
             <p class="mb-5 text-gray-600" ...>
                 {{ $sections['Team_yayasan']->subtitle }}
             </p>
-            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
+            <div class="mx-auto h-1 w-20 garis-judul"></div>
             @endif
         </div>
 
@@ -328,7 +282,7 @@
             <h3 class="mb-4 font-semibold text-blue-500">
                 {{ $section->subtitle }}
             </h3>
-            <div class="mx-auto h-1 w-20 bg-green-500"></div>
+            <div class="mx-auto h-1 w-20 garis-judul"></div>
         </div>
 
         @if ($blogs->count() > 0)
@@ -396,8 +350,7 @@
         @endif
 
         <div class="mt-10 text-center">
-            <a href="#"
-                class="btn btn-outline-light">
+            <a href="#" class="btn btn-outline-light">
                 Lihat Semua Berita
             </a>
         </div>
@@ -405,84 +358,7 @@
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="bg-gray-50 py-16">
-    <div class="container mx-auto px-4">
-        <div class="mb-12 text-center">
-            @php
-            $section = sectionHeader('contact');
-            @endphp
-
-            <h2 class="mb-4 font-bold title-section">{{ $section->title }}</h2>
-            <div class="mx-auto h-1 w-20 bg-blue-500"></div>
-        </div>
-
-        <div class="flex flex-col gap-6 md:flex-row md:items-stretch">
-            <!-- Kolom Kiri: Hubungi Kami -->
-            <div class="md:w-1/2">
-                <div class="h-full rounded-xl bg-white p-6 shadow-md">
-                    <h3 class="mb-4 font-semibold">{{ $section->subtitle }}</h3>
-
-                    <!-- Alamat -->
-                    <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-primaryHome">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Alamat</h4>
-                            <p class="text-gray-600">{!! nl2br(e($kontak['alamat']->value)) !!}</p>
-                        </div>
-                    </div>
-
-                    <!-- Telepon -->
-                    <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-primaryHome">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Telepon</h4>
-                            <p class="text-gray-600">{!! nl2br(e($kontak['telepon']->value)) !!}</p>
-                        </div>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="mb-4 flex items-start">
-                        <div class="mr-4 mt-1 text-primaryHome">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Email</h4>
-                            <p class="text-gray-600">{{ $kontak['email']->value}}</p>
-                        </div>
-                    </div>
-
-                    <!-- Jam Operasional -->
-                    <div class="flex items-start">
-                        <div class="mr-4 mt-1 text-primaryHome">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Jam Operasional</h4>
-                            <p class="text-gray-600">{!! nl2br(e($kontak['jam']->value)) !!}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kolom Kanan: Google Maps -->
-            <div class="md:w-1/2">
-                <div class="h-full rounded-xl bg-white p-6 shadow-md">
-                    <h3 class="mb-4 font-semibold">Lokasi Kami</h3>
-                    <div class="relative h-0 w-full overflow-hidden rounded-lg pb-[56%]">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1222.7013959293104!2d110.60411067090085!3d-7.692333357861694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a43f01ae7ca55%3A0x3052ee63172a145f!2sMasjid%20Al-Muhajirin!5e0!3m2!1sid!2sid!4v1743005025922!5m2!1sid!2sid"
-                            class="absolute left-0 top-0 h-full w-full border-0" allowfullscreen=""
-                            loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@include('partials.sections.contact')
 
 <!-- Register Section -->
 <section id="daftar" class="bg-primaryHome py-16 text-white">
@@ -492,8 +368,7 @@
             Bergabunglah dengan Ponpes Selfa, Bersama Ponpes Selfa, kami membina jiwa berilmu
             dan beramal, untuk Islam dan kemaslahatan masyarakat..
         </p>
-        <a href="pendaftaran"
-            class="btn btn-outline-dark">
+        <a href="pendaftaran" class="btn btn-outline-dark">
             Daftar Sekarang
         </a>
     </div>

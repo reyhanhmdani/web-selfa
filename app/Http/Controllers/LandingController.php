@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Footer;
+use App\Models\HeroSection;
 use App\Models\Team;
 use App\Models\About;
 use App\Models\Navbar;
@@ -23,7 +24,8 @@ class LandingController extends Controller
     {
         // Section
         $navbar = Navbar::where('status_page', 'utama')->first();
-        $sections = SectionHeader::where('status_page', 'utama')->get()->keyBy('section_key');
+        $heroSection = HeroSection::where('status_page', 'utama')->first();
+        $sections = SectionHeader::get()->keyBy('section_key');
         $about = About::where('status_page', 'utama')->first();
         $pendidikans = Pendidikan::take(3)->get();
         $footer = Footer::getSingleton();
@@ -44,7 +46,7 @@ class LandingController extends Controller
                         ->get()
                         ->keyBy('key');
 
-        return view('pages.home', compact('navbar', 'sections', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
+        return view('pages.home', compact('navbar', 'heroSection', 'sections', 'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
     }
 
 
@@ -52,7 +54,8 @@ class LandingController extends Controller
     {
          // Section
         $navbar = Navbar::where('status_page', 'ponpes')->first();
-        $sections = SectionHeader::where('status_page', 'ponpes')->get()->keyBy('section_key');
+        $heroSection = HeroSection::where('status_page', 'ponpes')->first();
+        $sections = SectionHeader::get()->keyBy('section_key');
         $about = About::where('status_page', 'ponpes')->first();
         $pendidikans = Pendidikan::take(3)->get();
         $footer = Footer::getSingleton();
@@ -72,6 +75,6 @@ class LandingController extends Controller
                         ->get()
                         ->keyBy('key');
 
-        return view('pages.ponpes', compact('navbar', 'sections',  'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
+        return view('pages.ponpes', compact('navbar', 'heroSection', 'sections',  'about', 'pendidikans', 'totalSantri', 'programs', 'blogs', 'lembagas', 'totalLembaga', 'teams', 'galeriFoto', 'visiMisi',  'footer', 'kontak'));
     }
 }

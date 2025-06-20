@@ -10,6 +10,27 @@
         },
     })
 
+// anime js
+     document.addEventListener('DOMContentLoaded', function() {
+        // 1. Membungkus setiap huruf dari judul navbar ke dalam elemen <span>
+        const textWrapper = document.querySelector('#navbar-title');
+        if (textWrapper) {
+            textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+            // 2. Membuat animasi dengan Anime.js setelah huruf-hurufnya siap
+            anime.timeline({loop: false}) // Animasi hanya berjalan sekali
+                .add({
+                    targets: '#navbar-title .letter',
+                    translateY: [40, 0],   // Bergerak dari 40px di bawah ke posisi asli (0)
+                    translateZ: 0,
+                    opacity: [0, 1],       // Muncul dari transparan menjadi solid
+                    easing: "easeOutExpo",
+                    duration: 1400,
+                    delay: (el, i) => 70 * i // Setiap huruf akan muncul dengan jeda 70ms
+                });
+        }
+    });
+
     // tombol melayang
     // Optional: Add animation effects
     document.addEventListener('DOMContentLoaded', function () {

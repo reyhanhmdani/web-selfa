@@ -37,8 +37,7 @@
 .page-home {
     --primary: #2f308a;
     --primary-dark: #24256c;
-    --secondary: #f8f806;
-    --secondary-dark: #e4e404;
+    --secondary: #d2d20e;
 
     --text: #4b5563;
 
@@ -215,7 +214,8 @@
     background: rgba(255, 255, 255, 0.9);
     border-radius: 0 50px 50px 0;
     padding: 0.7rem;
-    box-shadow: 0 4px 6px -1px var(--nav-shadow-color);
+    box-shadow: 0 3px 4px -1px var(--nav-shadow-color);
+    border-color: var(--primary);
 }
 
 .floating-content .dropdown.open .dropdown-menu {
@@ -279,6 +279,13 @@
     }
 }
 
+
+/* Header */
+.warna-border-double{
+    color: var(--primary);
+}
+
+/* Swiper */
 .swiper-slide {
     transition:
         transform 0.3s ease,
@@ -292,4 +299,18 @@
 /* Program */
 .group-hover\:scale-105 {
     transform: scale(1.05);
+}
+
+
+/* Garis Judul */
+.garis-judul {
+    background-color: var(--secondary);
+}
+
+
+/* Contact */
+.contact-info h3,
+.contact-info .fas { /* Targetkan judul h3 DAN semua ikon fas */
+    color: var(--primary); /* Otomatis menggunakan warna tema yang aktif */
+    transition: color 200ms ease-in-out;
 }

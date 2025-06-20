@@ -10,16 +10,17 @@
 
 <body class="@yield('body-class', 'page-default')">
 
-    @include('partials.navbar')
+    @include('partials.sections.navbar')
 
     <main>
         @yield('content')
-    </main>
 
-    @include('partials.footer')
+        @include('partials.sections.footer')
+    </main>
 
     {{-- Memanggil semua script dari satu file partial --}}
     @include('partials.scripts')
 
 </body>
+
 </html>
